@@ -17,7 +17,7 @@ information like book genre, author, title, and more.
 to read!
 
 **Why was BestBooks created?**
-- I've always been a big reader ever since I was a kid, so keeping track of the books I've read is a little 
+- I've always been a big reader ever since I was a kid, so keeping track of the books I've read can be a little 
 difficult. I figured that creating something to help my (admittedly poor) memory would be useful for 
 myself and any other book-lovers!
 
