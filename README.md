@@ -7,10 +7,8 @@
 BestBooks is an application that allows users to 
 - *keep track* of their library via adding previously-read books to their collection while including important 
 information like book genre, author, title, and more. 
-- *review* books by adding personal ratings (out of 5 stars) and express interest via adding books to their 
-*to-read* list.
-- *remove* books from their *to-read* list or library
-- *search* for books in their library based on information such as the book title, genre, author, or review.
+- *review* books by adding personal ratings (out of 5 stars).
+- *remove* books from their library
 
 **Who should use BestBooks?**
 - BestBooks is for any voracious readers who have too many books to keep track of, and anyone who wants
@@ -21,4 +19,11 @@ to read!
 difficult. I figured that creating something to help my (admittedly poor) memory would be useful for 
 myself and any other book-lovers!
 
-  
+
+
+## User Stories
+- As a user, I want to be able to add a new book to my library
+- As a user, I want to be able to view a list of the books in my library
+- As a user, I want to be able to select a book and add a rating from 1 to 5 stars 
+- As a user, I want to be able to filter through the books in my library by genre, author, rating,
+date completed, or title.
