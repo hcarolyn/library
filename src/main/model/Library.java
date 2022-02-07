@@ -1,3 +1,6 @@
+// the idea for the string builder in the libBookInfo method is from this link:
+// https://stackoverflow.com/questions/7817951/string-concatenation-in-java-when-to-use-stringbuilder-and-concat
+
 package model;
 
 import java.util.ArrayList;
@@ -8,7 +11,7 @@ public class Library {
 
     // EFFECTS: creates a new library containing books
     public Library() {
-        library = new ArrayList<Book>();
+        library = new ArrayList<>();
     }
 
     // EFFECTS: returns size of the library
@@ -50,12 +53,11 @@ public class Library {
     // REQUIRES: a non-empty array list with books
     // EFFECTS: returns the information of all books in the provided library in the form of a string
     public String libBookInfo(ArrayList<Book> lib) {
-        String bookTitles = " ";
+        StringBuilder bookTitles = new StringBuilder();
         for (Book b : lib) {
-            bookTitles = bookTitles + ", " + b.bookInfo(b);
+            bookTitles.append(", ").append(b.bookInfo(b));
         }
-        String trimmedBookTitles = bookTitles.trim().substring(1).trim();
-        return trimmedBookTitles;
+        return bookTitles.substring(2);
     }
 
     // REQUIRES: a rating (integer between [1, 5]), valid book title in library
@@ -105,7 +107,7 @@ public class Library {
 
     // REQUIRES: non-empty string
     // EFFECTS: returns a list with all books fitting the title
-    public ArrayList<Book> searchLibByTitles(String title) {
+    public ArrayList<Book> searchTitle(String title) {
         ArrayList<Book> searchResult = new ArrayList<>();
         for (Book b : library) {
             if (title.equalsIgnoreCase(b.getTitle())) {
@@ -117,7 +119,7 @@ public class Library {
 
     // REQUIRES: non-empty string
     // EFFECTS: returns a list with all books fitting the genre
-    public ArrayList<Book> searchLibByGenre(String genre) {
+    public ArrayList<Book> searchGenre(String genre) {
         ArrayList<Book> searchResult = new ArrayList<>();
         for (Book b : library) {
             if (genre.equalsIgnoreCase(b.getGenre())) {

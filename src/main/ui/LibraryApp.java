@@ -9,19 +9,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-
+// Library application
 public class LibraryApp {
     private Library lib;
     private Scanner input;
 
+    // EFFECTS: runs the library application
     public LibraryApp() {
         runLibrary();
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes user inputs
     private void runLibrary() {
         boolean keepGoing = true;
 
-        initiate();
+        start();
 
         while (keepGoing) {
             displayMenu();
@@ -37,12 +40,15 @@ public class LibraryApp {
         System.out.println("\nSee you later!");
     }
 
-    private void initiate() {
+    // MODIFIES: this
+    // EFFECTS: starts the library and scanner systems
+    private void start() {
         lib = new Library();
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
 
+    // EFFECTS: displays main menu options to user
     private void displayMenu() {
         System.out.println("Welcome to your library!");
         System.out.println("\nSelect from:");
@@ -53,6 +59,8 @@ public class LibraryApp {
         System.out.println("\tq -> quit");
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes user inputs
     private void processCommand(String command) {
         if (command.equalsIgnoreCase("a")) {
             addOrDeleteMenu();
@@ -67,6 +75,8 @@ public class LibraryApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays add or delete menu to user, processes following user inputs
     private void addOrDeleteMenu() {
         System.out.println("\nSelect from: ");
         System.out.println("\ta -> add a book");
@@ -83,6 +93,8 @@ public class LibraryApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds a book to the library
     private void doAdd() {
         System.out.println("What is the title?");
         String title = input.next();
@@ -106,6 +118,8 @@ public class LibraryApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: deletes a book from the library
     private void doDelete() {
         System.out.println("What is the title?");
         String title = input.next();
@@ -117,11 +131,14 @@ public class LibraryApp {
         }
     }
 
+    // EFFECTS: tells users how many books are in the library
     private void doView() {
         System.out.println("There are " + lib.getLibSize() + " books in your library, including: ");
         System.out.println(lib.libBookInfo(lib.returnArrayLib()));
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays change rating/reading status to users, processes following user inputs
     private void ratingOrStatusMenu() {
         System.out.println("\nSelect from: ");
         System.out.println("\ta -> add a rating");
@@ -138,7 +155,8 @@ public class LibraryApp {
         }
     }
 
-
+    // MODIFIES: this
+    // EFFECTS: changes the rating of a book in the library
     private void doRating() {
         System.out.println("What is the title?");
         String title = input.next();
@@ -157,6 +175,8 @@ public class LibraryApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: changes the reading status of a book in the library
     private void doStatus() {
         System.out.println("What is the title?");
         String title = input.next();
@@ -177,6 +197,7 @@ public class LibraryApp {
         }
     }
 
+    // EFFECTS: Displays the search options to users, processes the following user commands
     private void searchMenu() {
         System.out.println("\nSearch by: ");
         System.out.println("\tr -> rating");
@@ -199,6 +220,7 @@ public class LibraryApp {
         }
     }
 
+    // EFFECTS: shows readers the books in their library that match their desired rating
     private void searchRating() {
         List<Integer> ratings = getRatingList();
 
@@ -210,7 +232,7 @@ public class LibraryApp {
         }
     }
 
-
+    // EFFECTS: allows readers to input the number ratings they wish to search for
     private List<Integer> getRatingList() {
         boolean keepGoing = true;
         List<Integer> ratings = new ArrayList<>();
@@ -240,12 +262,12 @@ public class LibraryApp {
         return ratings;
     }
 
-
+    // EFFECTS: shows readers the books in their library that match their desired title
     private void searchTitle() {
         System.out.println("What title would you like to search for?");
         String title = input.next();
 
-        ArrayList<Book> searchTitleList = lib.searchLibByTitles(title);
+        ArrayList<Book> searchTitleList = lib.searchTitle(title);
 
         if (!searchTitleList.isEmpty()) {
             System.out.println("\tThere were " + searchTitleList.size() + " books with your title, including: ");
@@ -255,11 +277,12 @@ public class LibraryApp {
         }
     }
 
+    // EFFECTS: shows readers the books in their library that match their desired genre
     private void searchGenre() {
         System.out.println("What genre would you like to search for?");
         String genre = input.next();
 
-        ArrayList<Book> searchGenreList = lib.searchLibByGenre(genre);
+        ArrayList<Book> searchGenreList = lib.searchGenre(genre);
 
         if (!searchGenreList.isEmpty()) {
             System.out.println("\tThere were " + searchGenreList.size() + " books in your genre, including: ");
@@ -269,6 +292,7 @@ public class LibraryApp {
         }
     }
 
+    // EFFECTS: shows readers the unread books in their library
     private void searchUnread() {
         if (!lib.searchUnreadBooks().isEmpty()) {
             System.out.println("\tThere were " + lib.searchUnreadBooks().size() + " books in your genre, including: ");
