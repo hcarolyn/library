@@ -70,7 +70,11 @@ public class Book {
     public String bookInfo(Book book) {
         String author = book.getAuthor();
         String genre = book.getGenre();
-        return book.title + " by " + author + " about " + genre + " with a rating of " + book.getRating();
+        String rating = Integer.toString(book.getRating());
+        if (rating.equalsIgnoreCase("0")) {
+            rating = "nothing";
+        }
+        return book.title + " by " + author + " about " + genre + " with a rating of " + rating;
     }
 
 }

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LibraryTest {
     private Library testLibrary;
@@ -15,33 +15,25 @@ public class LibraryTest {
     String bkATitle = "Cow Behaviour";
     String bkAGenre = "CS";
     String bkAAuthor = "Gregor";
-    int bkARating;
     int bkADate = 2022;
-    boolean bkAStatus;
     Book bkA = new Book(bkATitle, bkAGenre, bkAAuthor, bkADate);
 
     String bkBTitle = "Percy Jackson";
     String bkBGenre = "Fantasy";
     String bkBAuthor = "Rick Riordan";
-    int bkBRating;
     int bkBDate = 2000;
-    boolean bkBStatus;
     Book bkB = new Book(bkBTitle, bkBGenre, bkBAuthor, bkBDate);
 
     String bkCTitle = "Are cats evil?";
     String bkCGenre = "Non-fiction";
     String bkCAuthor = "Concerned citizen";
-    int bkCRating;
     int bkCDate = 1;
-    boolean bkCStatus;
     Book bkC = new Book(bkCTitle, bkCGenre, bkCAuthor, bkCDate);
 
     String bkDTitle = "Cow behaviour and more animals";
     String bkDGenre = "Non-fiction";
-    String bkDAuthor = "Rick Riordan";
-    int bkDRating;
+    String bkDAuthor = "Paul Carter";
     int bkDDate = 978;
-    boolean bkDStatus;
     Book bkD = new Book(bkDTitle, bkDGenre, bkDAuthor, bkDDate);
 
 
@@ -59,105 +51,261 @@ public class LibraryTest {
     public void testAddBook() {
         testLibrary.addBook(bkA);
         assertEquals(1, testLibrary.getLibSize());
+        assertTrue(testLibrary.containsBook(bkATitle));
 
         testLibrary.addBook(bkB);
+        assertEquals(2, testLibrary.getLibSize());
+        assertTrue(testLibrary.containsBook(bkBTitle));
+    }
+
+    @Test
+    public void testRemoveBookTrue() {
+        testLibrary.addBook(bkA);
+        testLibrary.addBook(bkB);
+        testLibrary.addBook(bkC);
+        assertEquals(3, testLibrary.getLibSize());
+        assertTrue(testLibrary.containsBook(bkCTitle));
+
+        Boolean removeBookCStatus = testLibrary.removeBook(bkCTitle);
+        assertFalse(testLibrary.containsBook(bkCTitle));
+        assertTrue(removeBookCStatus);
+        assertEquals(2, testLibrary.getLibSize());
+
+        Boolean removeBookAStatus = testLibrary.removeBook(bkATitle);
+        assertFalse(testLibrary.containsBook(bkATitle));
+        assertTrue(removeBookAStatus);
+        assertEquals(1, testLibrary.getLibSize());
+    }
+
+    @Test
+    public void testRemoveBookFalse() {
+        Boolean removeEmptyLib = testLibrary.removeBook(bkCTitle);
+        assertFalse(removeEmptyLib);
+        assertEquals(0, testLibrary.getLibSize());
+
+        testLibrary.addBook(bkA);
+        testLibrary.addBook(bkB);
+        assertEquals(2, testLibrary.getLibSize());
+
+        Boolean removeBookDStatus = testLibrary.removeBook(bkDTitle);
+        assertFalse(removeBookDStatus);
         assertEquals(2, testLibrary.getLibSize());
 
     }
 
-
-    //    // REQUIRES: non-empty string
-//    // MODIFIES: this
-//    // EFFECTS: if book exists in library, returns true and removes book. if not, returns false
-//    public Boolean removeBook(String title) {
-//        for (Book b : library) {
-//            if (title.equalsIgnoreCase(b.getTitle())) {
-//                library.remove(b);
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-//
     @Test
-    public void testRemoveBook() {
+    public void testContainsBook() {
+        testLibrary.addBook(bkA);
+        testLibrary.addBook(bkD);
+        testLibrary.addBook(bkC);
 
-    }
-//    // REQUIRES: non-empty string
-//    // EFFECTS: if this book exists in library, returns true. if not, returns false
-//    public Boolean containsBook(String title) {
-//        for (Book b : library) {
-//            if (title.equalsIgnoreCase(b.getTitle())) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-
-    @Test
-    public void testContainsBookTrue() {
-        // test both lower and upper base books?
-        // test part of the title?
-
+        assertTrue(testLibrary.containsBook(bkATitle));
+        assertTrue(testLibrary.containsBook(bkDTitle));
+        assertFalse(testLibrary.containsBook(bkBTitle));
+        assertFalse(testLibrary.containsBook("Testing testing!"));
     }
 
-    @Test
-    public void testContainsBookFalse() {
-
-    }
-
-
-    //    // REQUIRES: a non-empty array list with books
-//    // EFFECTS: returns the information of all books in the provided library in the form of a string
-//    public String libBookInfo(ArrayList<Book> lib) {
-//        String bookTitles = " ";
-//        for (Book b : lib) {
-//            bookTitles = bookTitles + ", " + b.bookInfo(b);
-//        }
-//        String trimmedBookTitles = bookTitles.trim().substring(1).trim();
-//        return trimmedBookTitles;
-//    }
-//
     @Test
     public void testLibBookInfoSingle() {
-
+        testLibrary.addBook(bkA);
+        String expectedLibInfo = bkATitle + " by " + bkAAuthor + " about " + bkAGenre + " with a rating of nothing";
+        assertEquals(expectedLibInfo, testLibrary.libBookInfo(testLibrary.returnArrayLib()));
     }
 
     @Test
     public void testLibBookInfoMultiple() {
+        testLibrary.addBook(bkA);
+        testLibrary.addBook(bkB);
+        bkB.changeRating(3);
 
+        String expectedAInfo = bkATitle + " by " + bkAAuthor + " about " + bkAGenre + " with a rating of nothing";
+        String expectedBInfo = bkBTitle + " by " + bkBAuthor + " about " + bkBGenre + " with a rating of 3";
+        String expectedOverallInfo = expectedAInfo + ", " + expectedBInfo;
+        assertEquals(expectedOverallInfo, testLibrary.libBookInfo(testLibrary.returnArrayLib()));
     }
 
-    //    // REQUIRES: a rating (integer between [1, 5]), valid book title in library
-//    // MODIFIES: this
-//    // EFFECTS: replaces the rating of a specified book in the library
-//    public void replaceRating(String title, int rating) {
-//        for (Book b : library) {
-//            if (title.equalsIgnoreCase(b.getTitle())) {
-//                b.changeRating(rating);
-//            }
-//        }
-//    }
-//
     @Test
     public void testReplaceRating() {
-        // test boundaries? idk if really needed tho
+        testLibrary.addBook(bkD);
+        Book bookD = testLibrary.returnArrayLib().get(0);
+        assertEquals(bkD, bookD);
+        testLibrary.addBook(bkC);
+        Book bookC = testLibrary.returnArrayLib().get(1);
+        assertEquals(bkC, bookC);
+
+        assertEquals(0, bookD.getRating());
+        testLibrary.replaceRating(bkDTitle, 3);
+        assertEquals(3, bookD.getRating());
+        testLibrary.replaceRating(bkDTitle, 5);
+        assertEquals(5, bookD.getRating());
+
+        assertEquals(0, bookC.getRating());
+        testLibrary.replaceRating(bkCTitle, 5);
+        assertEquals(5, bookC.getRating());
+    }
+
+    @Test
+    public void testReplaceReadStatus() {
+        testLibrary.addBook(bkB);
+        Book bookB = testLibrary.returnArrayLib().get(0);
+        testLibrary.addBook(bkA);
+        Book bookA = testLibrary.returnArrayLib().get(1);
+
+        assertFalse(bookB.getReadStatus());
+        testLibrary.replaceReadStatus(bkBTitle, true);
+        assertTrue(bookB.getReadStatus());
+        testLibrary.replaceReadStatus(bkBTitle, false);
+        assertFalse(bookB.getReadStatus());
+
+        assertFalse(bookA.getReadStatus());
+        testLibrary.replaceReadStatus(bkATitle, true);
+        assertTrue(bookA.getReadStatus());
+        testLibrary.replaceReadStatus(bkATitle, false);
+        assertFalse(bookA.getReadStatus());
 
     }
 
-    //    // REQUIRES: valid library book title, boolean (t/f)
-//    // MODIFIES: this
-//    // EFFECTS: replaces the read status of a specified book in the library
-//    public void replaceReadStatus(String title, Boolean status) {
-//        for (Book b : library) {
-//            if (title.equalsIgnoreCase(b.getTitle())) {
-//                b.changeReadStatus(status);
-//            }
-//        }
-//    }
     @Test
-    public void testReplaceReadStatus() {
-        // need to test both F/T
+    public void testSearchRatingSingleResult() {
+        List<Integer> ratings = new ArrayList<>();
+        ratings.add(1);
+        ratings.add(2);
+        testLibrary.addBook(bkA);
+        testLibrary.addBook(bkB);
+        testLibrary.replaceRating(bkBTitle, 2);
+
+        ArrayList<Book> searchResults = testLibrary.searchRating(ratings);
+        assertEquals(1, searchResults.size());
+        assertEquals(bkB, searchResults.get(0));
+    }
+
+    @Test
+    public void testSearchRatingMultiResultSingleList() {
+        List<Integer> ratings = new ArrayList<>();
+        ratings.add(3);
+        testLibrary.addBook(bkA);
+        testLibrary.addBook(bkB);
+        testLibrary.addBook(bkC);
+        testLibrary.replaceRating(bkBTitle, 3);
+        testLibrary.replaceRating(bkCTitle, 3);
+
+        ArrayList<Book> searchResults = testLibrary.searchRating(ratings);
+        assertEquals(2, searchResults.size());
+        assertEquals(bkB, searchResults.get(0));
+        assertEquals(bkC, searchResults.get(1));
+    }
+
+    @Test
+    public void testSearchRatingMultiResultMultiList() {
+        List<Integer> ratings = new ArrayList<>();
+        ratings.add(4);
+        ratings.add(5);
+        testLibrary.addBook(bkA);
+        testLibrary.addBook(bkB);
+        testLibrary.addBook(bkC);
+        testLibrary.addBook(bkD);
+        testLibrary.replaceRating(bkATitle, 4);
+        testLibrary.replaceRating(bkDTitle, 5);
+
+        ArrayList<Book> searchResults = testLibrary.searchRating(ratings);
+        assertEquals(2, searchResults.size());
+        assertEquals(bkA, searchResults.get(0));
+        assertEquals(bkD, searchResults.get(1));
+    }
+
+    @Test
+    public void testSearchRatingNoResult() {
+        List<Integer> ratings = new ArrayList<>();
+        ratings.add(1);
+        testLibrary.addBook(bkA);
+
+        ArrayList<Book> searchResults = testLibrary.searchRating(ratings);
+        assertEquals(0, searchResults.size());
+    }
+
+    @Test
+    public void testSearchTitlesSingleResult() {
+        testLibrary.addBook(bkA);
+        testLibrary.addBook(bkD);
+
+        ArrayList<Book> searchResults = testLibrary.searchTitle(bkATitle);
+        assertEquals(1, searchResults.size());
+        assertEquals(bkA, searchResults.get(0));
+    }
+
+    @Test
+    public void testSearchTitlesNoResult() {
+        testLibrary.addBook(bkC);
+        testLibrary.addBook(bkD);
+
+        ArrayList<Book> searchResults = testLibrary.searchTitle(bkATitle);
+        assertEquals(0, searchResults.size());
+    }
+
+    @Test
+    public void testSearchGenreSingleResult() {
+        testLibrary.addBook(bkA);
+        testLibrary.addBook(bkB);
+
+        ArrayList<Book> searchResults = testLibrary.searchGenre(bkBGenre);
+        assertEquals(1, searchResults.size());
+        assertEquals(bkB, searchResults.get(0));
+    }
+
+    @Test
+    public void testSearchGenreMultiResult() {
+        testLibrary.addBook(bkB);
+        testLibrary.addBook(bkC);
+        testLibrary.addBook(bkD);
+
+        ArrayList<Book> searchResults = testLibrary.searchGenre(bkCGenre);
+        assertEquals(2, searchResults.size());
+        assertEquals(bkC, searchResults.get(0));
+        assertEquals(bkD, searchResults.get(1));
+    }
+
+    @Test
+    public void testSearchGenreNoResult() {
+        testLibrary.addBook(bkA);
+        ArrayList<Book> searchResults = testLibrary.searchGenre(bkBGenre);
+        assertEquals(0, searchResults.size());
+    }
+
+    @Test
+    public void testSearchUnreadSingleResult() {
+        testLibrary.addBook(bkA);
+        testLibrary.addBook(bkC);
+        testLibrary.replaceReadStatus(bkATitle, true);
+
+        ArrayList<Book> searchResults = testLibrary.searchUnreadBooks();
+        assertEquals(1, searchResults.size());
+        assertTrue(searchResults.contains(bkC));
+        assertFalse(searchResults.contains(bkA));
+    }
+
+    @Test
+    public void testSearchUnreadMultiResult() {
+        testLibrary.addBook(bkA);
+        testLibrary.addBook(bkB);
+        testLibrary.addBook(bkC);
+        testLibrary.replaceReadStatus(bkBTitle, true);
+
+        ArrayList<Book> searchResults = testLibrary.searchUnreadBooks();
+        assertEquals(2, searchResults.size());
+        assertTrue(searchResults.contains(bkC));
+        assertFalse(searchResults.contains(bkB));
+        assertTrue(searchResults.contains(bkA));
+    }
+
+
+    @Test
+    public void testSearchUnreadNoResult() {
+        testLibrary.addBook(bkD);
+        testLibrary.replaceReadStatus(bkDTitle, true);
+
+        ArrayList<Book> searchResults = testLibrary.searchUnreadBooks();
+        assertEquals(0, searchResults.size());
+        assertFalse(searchResults.contains(bkD));
     }
 
 
@@ -173,117 +321,6 @@ public class LibraryTest {
     public void testReturnArrayLib() {
 
     }
-//    // REQUIRES: non-empty list of valid ratings (integer between [1, 5])
-//    // EFFECTS: returns an array list with all books of certain ratings
-//    public ArrayList<Book> searchRating(List<Integer> ratings) {
-//        ArrayList<Book> searchResult = new ArrayList<>();
-//        for (Book b : library) {
-//            for (Integer r : ratings) {
-//                if (b.getRating() == r) {
-//                    searchResult.add(b);
-//                }
-//            }
-//        }
-//        return searchResult;
-//    }
-
-    @Test
-    public void testSearchRatingSingle() {
-
-    }
-
-    @Test
-    public void testSearchRatingMultiple() {
-
-    }
-
-    @Test
-    public void testSearchRatingNothing() {
-
-    }
-
-    //
-//    // REQUIRES: non-empty string
-//    // EFFECTS: returns a list with all books fitting the title
-//    public ArrayList<Book> searchLibByTitles(String title) {
-//        ArrayList<Book> searchResult = new ArrayList<>();
-//        for (Book b : library) {
-//            if (title.equalsIgnoreCase(b.getTitle())) {
-//                searchResult.add(b);
-//            }
-//        }
-//        return searchResult;
-//    }
-//
-    @Test
-    public void testSearchTitlesSingle() {
-
-    }
-
-    @Test
-    public void testSearchTitlesMultiple() {
-
-    }
-
-    @Test
-    public void testSearchTitlesNothing() {
-
-    }
-
-    //    // REQUIRES: non-empty string
-//    // EFFECTS: returns a list with all books fitting the genre
-//    public ArrayList<Book> searchLibByGenre(String genre) {
-//        ArrayList<Book> searchResult = new ArrayList<>();
-//        for (Book b : library) {
-//            if (genre.equalsIgnoreCase(b.getGenre())) {
-//                searchResult.add(b);
-//            }
-//        }
-//        return searchResult;
-//    }
-//
-    @Test
-    public void testSearchGenreSingle() {
-
-    }
-
-    @Test
-    public void testSearchGenreMultiple() {
-
-    }
-
-    @Test
-    public void testSearchGenreNothing() {
-
-    }
-//    // EFFECTS: returns a list with all unread books
-//    public ArrayList<Book> searchUnreadBooks() {
-//        ArrayList<Book> searchResult = new ArrayList<>();
-//        for (Book b : library) {
-//            if (!b.getReadStatus()) {
-//                searchResult.add(b);
-//            }
-//        }
-//        return searchResult;
-//    }
-
-    @Test
-    public void testSearchUnreadSingle() {
-
-    }
-
-    @Test
-    public void testSearchUnreadMultiple() {
-
-    }
-
-    @Test
-    public void testSearchUnreadNothing() {
-
-    }
-
-
-    // 12 methods in total - do all 12 tomorrow!!
-    // will prob take 2 hours
 
 }
+
