@@ -65,6 +65,8 @@ public class Book {
         this.readStatus = readStatus;
     }
 
+    // REQUIRES: valid book
+    // EFFECTS: returns book information
     public String bookInfo(Book book) {
         String bookInfo = " ";
         bookInfo = book.title + " by " + book.getAuthor() + " about " + book.getGenre();

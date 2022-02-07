@@ -25,5 +25,4 @@ myself and any other book-lovers!
 - As a user, I want to be able to add a new book to my library
 - As a user, I want to be able to view a list of the books in my library
 - As a user, I want to be able to select a book and add a rating from 1 to 5 stars 
-- As a user, I want to be able to filter through the books in my library by genre, author, rating,
-date completed, or title.
+- As a user, I want to be able to filter through the books in my library by read status, genre, rating, or title.
