@@ -7,19 +7,23 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BookTest {
     Book book;
+    String bookTitle = "TestBook";
+    String bookGenre = "TestGenre";
+    String bookAuthor = "TestAuthor";
+    int bookYear = 2022;
 
     @BeforeEach
     public void setup() {
-        this.book = new Book("TestBook", "TestGenre", "TestAuthor", 2022);
+        this.book = new Book(bookTitle, bookGenre, bookAuthor, bookYear);
     }
 
     @Test
     public void testBook() {
-        assertEquals("TestBook", this.book.getTitle());
-        assertEquals("TestGenre", this.book.getGenre());
-        assertEquals("TestAuthor", this.book.getAuthor());
+        assertEquals(bookTitle, this.book.getTitle());
+        assertEquals(bookGenre, this.book.getGenre());
+        assertEquals(bookAuthor, this.book.getAuthor());
         assertEquals(0, this.book.getRating());
-        assertEquals(2002, this.book.getDatePublished());
+        assertEquals(bookYear, this.book.getDatePublished());
         assertFalse(this.book.getReadStatus());
     }
 
@@ -44,7 +48,15 @@ class BookTest {
         assertTrue(this.book.getReadStatus());
     }
 
-// NEED TO ADD TESTS AFTERWARDS
+    @Test
+    public void testBookInfo() {
+        String expectBookInfo = "TestBook by TestAuthor about TestGenre with a rating of 0";
+        assertEquals(expectBookInfo, book.bookInfo(book));
 
+        Book bookB = new Book("Trust the Natural Recursion", "CS", "Gregor", 2021);
+        bookB.changeRating(5);
+        String expectBookBInfo = "Trust the Natural Recursion by Gregor about CS with a rating of 5";
+        assertEquals(expectBookBInfo, bookB.bookInfo(bookB));
+    }
 
 }

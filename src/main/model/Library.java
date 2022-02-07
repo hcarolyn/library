@@ -3,11 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-import static jdk.nashorn.internal.objects.NativeString.trim;
-
 public class Library {
     ArrayList<Book> library;
-    List<BookInSeries> bookInSeries;
 
     // EFFECTS: creates a new library containing books
     public Library() {
@@ -26,24 +23,7 @@ public class Library {
         this.library.add(book);
     }
 
-//    // MODIFIES: this
-//    // EFFECTS: if book exists in library, returns true and removes book. if not, returns false
-//    public Boolean removeBook(Book book) {
-//        if (this.library.contains(book)) {
-//            this.library.remove(book);
-//            return true;
-//        }
-//        return false;
-//    }
-
-    // EFFECTS: if this book exists in library, returns true. if not, returns false
-//    public Boolean containsBook(Book book) {
-//        if (library.contains(book)) {
-//            return true;
-//        }
-//        return false;
-//    }
-
+    // REQUIRES: non-empty string
     // MODIFIES: this
     // EFFECTS: if book exists in library, returns true and removes book. if not, returns false
     public Boolean removeBook(String title) {
@@ -56,6 +36,7 @@ public class Library {
         return false;
     }
 
+    // REQUIRES: non-empty string
     // EFFECTS: if this book exists in library, returns true. if not, returns false
     public Boolean containsBook(String title) {
         for (Book b : library) {
@@ -66,18 +47,20 @@ public class Library {
         return false;
     }
 
-
-    // EFFECTS: returns the information of all books in the provided library
+    // REQUIRES: a non-empty array list with books
+    // EFFECTS: returns the information of all books in the provided library in the form of a string
     public String libBookInfo(ArrayList<Book> lib) {
         String bookTitles = " ";
         for (Book b : lib) {
             bookTitles = bookTitles + ", " + b.bookInfo(b);
         }
-        return trim(bookTitles);
+        String trimmedBookTitles = bookTitles.trim().substring(1).trim();
+        return trimmedBookTitles;
     }
 
+    // REQUIRES: a rating (integer between [1, 5]), valid book title in library
     // MODIFIES: this
-    //?????????????
+    // EFFECTS: replaces the rating of a specified book in the library
     public void replaceRating(String title, int rating) {
         for (Book b : library) {
             if (title.equalsIgnoreCase(b.getTitle())) {
@@ -86,8 +69,9 @@ public class Library {
         }
     }
 
+    // REQUIRES: valid library book title, boolean (t/f)
     // MODIFIES: this
-    //?????????????
+    // EFFECTS: replaces the read status of a specified book in the library
     public void replaceReadStatus(String title, Boolean status) {
         for (Book b : library) {
             if (title.equalsIgnoreCase(b.getTitle())) {
@@ -96,8 +80,7 @@ public class Library {
         }
     }
 
-    // MODIFIES: this
-    //?????????????
+    // EFFECTS: returns an array list with the same books as the library object
     public ArrayList<Book> returnArrayLib() {
         ArrayList<Book> returnList = new ArrayList<>();
         for (Book b : library) {
@@ -106,8 +89,8 @@ public class Library {
         return returnList;
     }
 
-
-    // EFFECTS: returns a list with all books of certain ratings
+    // REQUIRES: non-empty list of valid ratings (integer between [1, 5])
+    // EFFECTS: returns an array list with all books of certain ratings
     public ArrayList<Book> searchRating(List<Integer> ratings) {
         ArrayList<Book> searchResult = new ArrayList<>();
         for (Book b : library) {
@@ -120,9 +103,10 @@ public class Library {
         return searchResult;
     }
 
+    // REQUIRES: non-empty string
     // EFFECTS: returns a list with all books fitting the title
     public ArrayList<Book> searchLibByTitles(String title) {
-        ArrayList<Book> searchResult = new ArrayList<Book>();
+        ArrayList<Book> searchResult = new ArrayList<>();
         for (Book b : library) {
             if (title.equalsIgnoreCase(b.getTitle())) {
                 searchResult.add(b);
@@ -131,6 +115,7 @@ public class Library {
         return searchResult;
     }
 
+    // REQUIRES: non-empty string
     // EFFECTS: returns a list with all books fitting the genre
     public ArrayList<Book> searchLibByGenre(String genre) {
         ArrayList<Book> searchResult = new ArrayList<>();
@@ -152,6 +137,5 @@ public class Library {
         }
         return searchResult;
     }
-
 
 }

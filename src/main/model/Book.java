@@ -68,9 +68,9 @@ public class Book {
     // REQUIRES: valid book
     // EFFECTS: returns book information
     public String bookInfo(Book book) {
-        String bookInfo = " ";
-        bookInfo = book.title + " by " + book.getAuthor() + " about " + book.getGenre();
-        return bookInfo;
+        String author = book.getAuthor();
+        String genre = book.getGenre();
+        return book.title + " by " + author + " about " + genre + " with a rating of " + book.getRating();
     }
 
 }

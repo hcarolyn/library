@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static java.lang.Integer.parseInt;
 
 public class LibraryApp {
     private Library lib;
@@ -84,7 +83,7 @@ public class LibraryApp {
         }
     }
 
-    private Book bookInformation() {
+    private void doAdd() {
         System.out.println("What is the title?");
         String title = input.next();
 
@@ -97,13 +96,7 @@ public class LibraryApp {
         System.out.println("When is the publication year?");
         int year = Integer.parseInt(input.next());
 
-        Book book = new Book(title, genre, author, year);
-        return book;
-    }
-
-
-    private void doAdd() {
-        Book toAddBook = bookInformation();
+        Book toAddBook = new Book(title, genre, author, year);
 
         if (toAddBook.getDatePublished() <= 2022) {
             lib.addBook(toAddBook);
@@ -114,9 +107,10 @@ public class LibraryApp {
     }
 
     private void doDelete() {
-        Book toDeleteBook = bookInformation();
+        System.out.println("What is the title?");
+        String title = input.next();
 
-        if (lib.removeBook(toDeleteBook.getTitle())) {
+        if (lib.removeBook(title)) {
             System.out.println("Book deleted! Returning to main menu...");
         } else {
             System.out.println("No such book exists. Returning to main menu...");
@@ -146,16 +140,17 @@ public class LibraryApp {
 
 
     private void doRating() {
-        Book ratingBook = bookInformation();
+        System.out.println("What is the title?");
+        String title = input.next();
 
-        if (!lib.containsBook(ratingBook.getTitle())) {
+        if (!lib.containsBook(title)) {
             System.out.println("Invalid book. Returning to main menu...");
         } else {
             System.out.println("What rating would you like to give (out of 5)?");
             int rating = Integer.parseInt(input.next());
 
             if (1 <= rating && rating <= 5) {
-                lib.replaceRating(ratingBook.getTitle(), rating);
+                lib.replaceRating(title, rating);
             } else {
                 System.out.println("Invalid rating. Returning to main menu...");
             }
@@ -163,18 +158,19 @@ public class LibraryApp {
     }
 
     private void doStatus() {
-        Book statusBook = bookInformation();
+        System.out.println("What is the title?");
+        String title = input.next();
 
-        if (!lib.containsBook(statusBook.getTitle())) {
+        if (!lib.containsBook(title)) {
             System.out.println("Invalid book. Returning to main menu...");
         } else {
             System.out.println("Insert t if you have read the book and f if you have not.");
             String status = input.next();
 
             if (status.equalsIgnoreCase("t")) {
-                lib.replaceReadStatus(statusBook.getTitle(), true);
+                lib.replaceReadStatus(title, true);
             } else if (status.equalsIgnoreCase("f")) {
-                lib.replaceReadStatus(statusBook.getTitle(), false);
+                lib.replaceReadStatus(title, false);
             } else {
                 System.out.println("Invalid response. Returning to main menu...");
             }
@@ -205,7 +201,13 @@ public class LibraryApp {
 
     private void searchRating() {
         List<Integer> ratings = getRatingList();
-        System.out.println(lib.libBookInfo(lib.searchRating(ratings)));
+
+        if (!ratings.isEmpty()) {
+            System.out.println("\tThere were " + ratings.size() + " books with your ratings, including: ");
+            System.out.println(lib.libBookInfo(lib.searchRating(ratings)));
+        } else {
+            System.out.println("Sorry, no books were found with that rating.");
+        }
     }
 
 
@@ -215,18 +217,24 @@ public class LibraryApp {
 
         while (keepGoing) {
             System.out.println("What rating would you like to search for?");
-            System.out.println("\t# -> a number from 1 to 5");
+            System.out.println("\tn -> a number from 1 to 5");
             System.out.println("\tq -> I'm done adding ratings to my search list!");
             String command = input.next();
 
             if (command.equalsIgnoreCase("q")) {
                 keepGoing = false;
-            } else {
-                int ratingA = Integer.parseInt(command);
+            } else if (command.equalsIgnoreCase("n")) {
+                System.out.println("Add a number from 1 to 5");
+                int ratingA = Integer.parseInt(input.next());
+
                 if (1 <= ratingA && ratingA <= 5) {
                     ratings.add(ratingA);
+                    System.out.println("Number added!");
+                } else {
+                    System.out.println("Try a valid number next time!");
                 }
-                System.out.println("Try a valid number next time!");
+            } else {
+                System.out.println("Invalid response. Let's try again!");
             }
         }
         return ratings;
@@ -237,8 +245,11 @@ public class LibraryApp {
         System.out.println("What title would you like to search for?");
         String title = input.next();
 
-        if (!lib.searchLibByTitles(title).isEmpty()) {
-            System.out.println(lib.libBookInfo(lib.searchLibByTitles(title)));
+        ArrayList<Book> searchTitleList = lib.searchLibByTitles(title);
+
+        if (!searchTitleList.isEmpty()) {
+            System.out.println("\tThere were " + searchTitleList.size() + " books with your title, including: ");
+            System.out.println(lib.libBookInfo(searchTitleList));
         } else {
             System.out.println("Sorry, no books were found with that name.");
         }
@@ -248,8 +259,11 @@ public class LibraryApp {
         System.out.println("What genre would you like to search for?");
         String genre = input.next();
 
-        if (!lib.searchLibByGenre(genre).isEmpty()) {
-            System.out.println(lib.libBookInfo(lib.searchLibByGenre(genre)));
+        ArrayList<Book> searchGenreList = lib.searchLibByGenre(genre);
+
+        if (!searchGenreList.isEmpty()) {
+            System.out.println("\tThere were " + searchGenreList.size() + " books in your genre, including: ");
+            System.out.println(lib.libBookInfo(searchGenreList));
         } else {
             System.out.println("Sorry, no books were found with that genre.");
         }
@@ -257,6 +271,7 @@ public class LibraryApp {
 
     private void searchUnread() {
         if (!lib.searchUnreadBooks().isEmpty()) {
+            System.out.println("\tThere were " + lib.searchUnreadBooks().size() + " books in your genre, including: ");
             System.out.println(lib.libBookInfo(lib.searchUnreadBooks()));
         } else {
             System.out.println("Sorry, you've read everything :( ");
