@@ -134,7 +134,7 @@ public class LibraryApp {
     // EFFECTS: tells users how many books are in the library
     private void doView() {
         System.out.println("There are " + lib.getLibSize() + " books in your library, including: ");
-        System.out.println(lib.libBookInfo(lib.returnArrayLib()));
+        System.out.println(lib.libBookInfo(lib.getArrayLib()));
     }
 
     // MODIFIES: this

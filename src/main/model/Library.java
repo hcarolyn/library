@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Library {
-    ArrayList<Book> library;
+    private ArrayList<Book> library;
 
     // EFFECTS: creates a new library containing books
     public Library() {
@@ -17,6 +17,11 @@ public class Library {
     // EFFECTS: returns size of the library
     public int getLibSize() {
         return library.size();
+    }
+
+    // EFFECTS: returns an array list with the same books as the library object
+    public ArrayList<Book> getArrayLib() {
+        return library;
     }
 
     // REQUIRES: valid book
@@ -80,15 +85,6 @@ public class Library {
                 b.changeReadStatus(status);
             }
         }
-    }
-
-    // EFFECTS: returns an array list with the same books as the library object
-    public ArrayList<Book> returnArrayLib() {
-        ArrayList<Book> returnList = new ArrayList<>();
-        for (Book b : library) {
-            returnList.add(b);
-        }
-        return returnList;
     }
 
     // REQUIRES: non-empty list of valid ratings (integer between [1, 5])

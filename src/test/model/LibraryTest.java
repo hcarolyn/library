@@ -109,7 +109,7 @@ public class LibraryTest {
     public void testLibBookInfoSingle() {
         testLibrary.addBook(bkA);
         String expectedLibInfo = bkATitle + " by " + bkAAuthor + " about " + bkAGenre + " with a rating of nothing";
-        assertEquals(expectedLibInfo, testLibrary.libBookInfo(testLibrary.returnArrayLib()));
+        assertEquals(expectedLibInfo, testLibrary.libBookInfo(testLibrary.getArrayLib()));
     }
 
     @Test
@@ -121,16 +121,16 @@ public class LibraryTest {
         String expectedAInfo = bkATitle + " by " + bkAAuthor + " about " + bkAGenre + " with a rating of nothing";
         String expectedBInfo = bkBTitle + " by " + bkBAuthor + " about " + bkBGenre + " with a rating of 3";
         String expectedOverallInfo = expectedAInfo + ", " + expectedBInfo;
-        assertEquals(expectedOverallInfo, testLibrary.libBookInfo(testLibrary.returnArrayLib()));
+        assertEquals(expectedOverallInfo, testLibrary.libBookInfo(testLibrary.getArrayLib()));
     }
 
     @Test
     public void testReplaceRating() {
         testLibrary.addBook(bkD);
-        Book bookD = testLibrary.returnArrayLib().get(0);
+        Book bookD = testLibrary.getArrayLib().get(0);
         assertEquals(bkD, bookD);
         testLibrary.addBook(bkC);
-        Book bookC = testLibrary.returnArrayLib().get(1);
+        Book bookC = testLibrary.getArrayLib().get(1);
         assertEquals(bkC, bookC);
 
         assertEquals(0, bookD.getRating());
@@ -147,9 +147,9 @@ public class LibraryTest {
     @Test
     public void testReplaceReadStatus() {
         testLibrary.addBook(bkB);
-        Book bookB = testLibrary.returnArrayLib().get(0);
+        Book bookB = testLibrary.getArrayLib().get(0);
         testLibrary.addBook(bkA);
-        Book bookA = testLibrary.returnArrayLib().get(1);
+        Book bookA = testLibrary.getArrayLib().get(1);
 
         assertFalse(bookB.getReadStatus());
         testLibrary.replaceReadStatus(bkBTitle, true);
@@ -270,6 +270,16 @@ public class LibraryTest {
         ArrayList<Book> searchResults = testLibrary.searchGenre(bkBGenre);
         assertEquals(0, searchResults.size());
     }
+//    // EFFECTS: returns a list with all unread books
+//    public ArrayList<Book> searchUnreadBooks() {
+//        ArrayList<Book> searchResult = new ArrayList<>();
+//        for (Book b : library) {
+//            if (!b.getReadStatus()) {
+//                searchResult.add(b);
+//            }
+//        }
+//        return searchResult;
+//    }
 
     @Test
     public void testSearchUnreadSingleResult() {
@@ -306,20 +316,6 @@ public class LibraryTest {
         ArrayList<Book> searchResults = testLibrary.searchUnreadBooks();
         assertEquals(0, searchResults.size());
         assertFalse(searchResults.contains(bkD));
-    }
-
-
-    //    // EFFECTS: returns an array list with the same books as the library object
-//    public ArrayList<Book> returnArrayLib() {
-//        ArrayList<Book> returnList = new ArrayList<>();
-//        for (Book b : library) {
-//            returnList.add(b);
-//        }
-//        return returnList;
-//    }
-    @Test
-    public void testReturnArrayLib() {
-
     }
 
 }

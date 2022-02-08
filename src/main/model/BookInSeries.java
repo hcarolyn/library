@@ -9,7 +9,7 @@ public class BookInSeries extends Book {
                         int seriesSize, int numberInSeries, String nameOfSeries) {
         super(title, genre, author, datePublished);
         this.numberInSeries = numberInSeries;
-        this.seriesSize = numberInSeries;
+        this.seriesSize = seriesSize;
         this.nameOfSeries = nameOfSeries;
     }
 
@@ -33,7 +33,9 @@ public class BookInSeries extends Book {
             return "2nd";
         } else if (numberInSeries == 3) {
             return "3rd";
-        } else return Integer.toString(numberInSeries) + numberEnding;
+        } else {
+            return (numberInSeries) + numberEnding;
+        }
     }
 
     public String bookInfo(BookInSeries bookInSeries) {
