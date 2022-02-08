@@ -8,6 +8,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Tests for the Library class
 public class LibraryTest {
     private Library testLibrary;
 

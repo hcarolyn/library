@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-// Library application
+// Library application with various features (ex: adding books)
 public class LibraryApp {
     private Library lib;
     private Scanner input;
