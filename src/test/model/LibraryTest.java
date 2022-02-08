@@ -270,16 +270,6 @@ public class LibraryTest {
         ArrayList<Book> searchResults = testLibrary.searchGenre(bkBGenre);
         assertEquals(0, searchResults.size());
     }
-//    // EFFECTS: returns a list with all unread books
-//    public ArrayList<Book> searchUnreadBooks() {
-//        ArrayList<Book> searchResult = new ArrayList<>();
-//        for (Book b : library) {
-//            if (!b.getReadStatus()) {
-//                searchResult.add(b);
-//            }
-//        }
-//        return searchResult;
-//    }
 
     @Test
     public void testSearchUnreadSingleResult() {
