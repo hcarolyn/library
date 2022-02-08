@@ -295,7 +295,7 @@ public class LibraryApp {
     // EFFECTS: shows readers the unread books in their library
     private void searchUnread() {
         if (!lib.searchUnreadBooks().isEmpty()) {
-            System.out.println("\tThere were " + lib.searchUnreadBooks().size() + " books in your genre, including: ");
+            System.out.println("\tThere were " + lib.searchUnreadBooks().size() + " unread books, including: ");
             System.out.println(lib.libBookInfo(lib.searchUnreadBooks()));
         } else {
             System.out.println("Sorry, you've read everything :( ");
