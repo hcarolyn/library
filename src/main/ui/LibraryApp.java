@@ -242,17 +242,15 @@ public class LibraryApp {
         List<Integer> ratings = new ArrayList<>();
 
         while (keepGoing) {
-            System.out.println("What rating would you like to search for?");
-            System.out.println("\tn -> a number from 1 to 5");
-            System.out.println("\tq -> I'm done adding ratings to my search list!");
+            System.out.println("Type n to add a rating to search for, or press q to search.");
+//            System.out.println("\tn -> add a rating to search for");
+//            System.out.println("\tq -> I'm done adding ratings to my search list!");
             String command = input.next();
-
             if (command.equalsIgnoreCase("q")) {
                 keepGoing = false;
             } else if (command.equalsIgnoreCase("n")) {
                 System.out.println("Add a number from 1 to 5");
                 int ratingA = Integer.parseInt(input.next());
-
                 if (1 <= ratingA && ratingA <= 5) {
                     ratings.add(ratingA);
                     System.out.println("Number added!");
