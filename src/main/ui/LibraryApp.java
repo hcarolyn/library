@@ -242,9 +242,7 @@ public class LibraryApp {
         List<Integer> ratings = new ArrayList<>();
 
         while (keepGoing) {
-            System.out.println("Type n to add a rating to search for, or press q to search.");
-//            System.out.println("\tn -> add a rating to search for");
-//            System.out.println("\tq -> I'm done adding ratings to my search list!");
+            System.out.println("Type n to add a rating to search for, or type q to search.");
             String command = input.next();
             if (command.equalsIgnoreCase("q")) {
                 keepGoing = false;
