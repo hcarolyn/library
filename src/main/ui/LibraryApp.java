@@ -227,10 +227,11 @@ public class LibraryApp {
     // EFFECTS: shows readers the books in their library that match their desired rating
     private void searchRating() {
         List<Integer> ratings = getRatingList();
+        ArrayList<Book> searchResult = lib.searchRating(ratings);
 
         if (!ratings.isEmpty()) {
-            System.out.println("\tThere were " + ratings.size() + " books with your ratings, including: ");
-            System.out.println(lib.libBookInfo(lib.searchRating(ratings)));
+            System.out.println("\tThere were " + searchResult.size() + " books with your ratings, including: ");
+            System.out.println(lib.libBookInfo(searchResult));
         } else {
             System.out.println("Sorry, no books were found with that rating.");
         }
