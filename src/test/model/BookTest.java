@@ -51,7 +51,7 @@ class BookTest {
 
     @Test
     public void testBookInfo() {
-        String expectBookInfo = "TestBook by TestAuthor about TestGenre with a rating of 0";
+        String expectBookInfo = "TestBook by TestAuthor about TestGenre with a rating of nothing";
         assertEquals(expectBookInfo, book.bookInfo(book));
 
         Book bookB = new Book("Trust the Natural Recursion", "CS", "Gregor", 2021);
