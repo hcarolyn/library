@@ -163,7 +163,6 @@ public class LibraryTest {
         assertTrue(bookA.getReadStatus());
         testLibrary.replaceReadStatus(bkATitle, false);
         assertFalse(bookA.getReadStatus());
-
     }
 
     @Test
