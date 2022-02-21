@@ -33,7 +33,7 @@ public class JsonReaderTest extends TestBooks {
             assertEquals("Library", lib.getLibName()); // what is the default name?
             assertEquals(0, lib.getLibSize());
         } catch (IOException e) {
-            // should this fail or not?@?@?
+            // should pass (i think)
         }
     }
 
