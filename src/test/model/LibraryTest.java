@@ -13,7 +13,6 @@ public class LibraryTest {
     private Library testLibrary;
     private String testLibName;
 
-    // some example books for tests
     String bkATitle = "Cow Behaviour";
     String bkAGenre = "CS";
     String bkAAuthor = "Gregor";
