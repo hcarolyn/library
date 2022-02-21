@@ -1,0 +1,21 @@
+{
+    "books": [
+        {
+            "author": "Gregor",
+            "read status": false,
+            "genre": "CS",
+            "rating": 0,
+            "date published": 2022,
+            "title": "Cow Behaviour"
+        },
+        {
+            "author": "Rick Riordan",
+            "read status": true,
+            "genre": "Fantasy",
+            "rating": 3,
+            "date published": 2000,
+            "title": "Percy Jackson"
+        }
+    ],
+    "name": "Library"
+}

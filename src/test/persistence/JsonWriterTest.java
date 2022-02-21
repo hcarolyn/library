@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,7 +19,7 @@ public class JsonWriterTest extends TestBooks {
     void testWriterInvalidFile() {
         try {
             Library lib = new Library("Library");
-            JsonWriter writer = new JsonWriter("./data/test\0Non1Exist2File.json");
+            JsonWriter writer = new JsonWriter("./data/my\0illegal:fileName.json");
             writer.open();
             fail("IOException was expected");
         } catch (IOException e) {
@@ -58,9 +59,9 @@ public class JsonWriterTest extends TestBooks {
             writer.write(lib);
             writer.close();
 
-            JsonReader reader = new JsonReader("./data/testReaderNonEmptyLibrary.json");
+            JsonReader reader = new JsonReader("./data/testWriterNonEmptyLibrary.json");
             lib = reader.read();
-            ArrayList<Book> arrayLib = lib.getArrayLib();
+            List<Book> arrayLib = lib.getArrayLib();
             assertEquals("Library", lib.getLibName());
             assertEquals(2, lib.getLibSize());
             checkBookString("Cow Behaviour", "CS", "Gregor", arrayLib.get(0));
