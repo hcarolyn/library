@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 // Tests for the Library class
 public class LibraryTest {
     private Library testLibrary;
+    private String testLibName;
 
     // some example books for tests
     String bkATitle = "Cow Behaviour";
@@ -40,12 +41,13 @@ public class LibraryTest {
 
     @BeforeEach
     void setup() {
-        testLibrary = new Library();
+        testLibrary = new Library(testLibName);
     }
 
     @Test
     public void testConstructor() {
         assertEquals(0, testLibrary.getLibSize());
+        assertEquals(testLibName, testLibrary.getLibName());
     }
 
     @Test

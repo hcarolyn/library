@@ -1,23 +1,36 @@
 // the idea for the string builder in the libBookInfo method is from this link:
 // https://stackoverflow.com/questions/7817951/string-concatenation-in-java-when-to-use-stringbuilder-and-concat
+// some methods are based on methods in the EdX JsonSerializationDemo provided in class
+
 
 package model;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 // Represents a library (a collection of books)
-public class Library {
+public class Library implements Writable {
     private ArrayList<Book> library;
+    private String name;
 
     // EFFECTS: creates a new library containing books
-    public Library() {
+    public Library(String name) {
+        this.name = name;
         library = new ArrayList<>();
     }
 
     // EFFECTS: returns size of the library
     public int getLibSize() {
         return library.size();
+    }
+
+    // EFFECTS: returns name of the library
+    public String getLibName() {
+        return name;
     }
 
     // EFFECTS: returns an array list with the same books as the library object
@@ -135,6 +148,26 @@ public class Library {
             }
         }
         return searchResult;
+    }
+
+    @Override
+    // EFFECTS: returns library as a JSON object
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("books", booksToJson());
+        return json;
+    }
+
+    // EFFECTS: returns books in this library as a JSON array
+    private JSONArray booksToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Book b : library) {
+            jsonArray.put(b.toJson());
+        }
+
+        return jsonArray;
     }
 
 }

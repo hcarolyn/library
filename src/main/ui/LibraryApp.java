@@ -1,22 +1,41 @@
-// some methods (ex: runLibrary) methods are based on methods in the EdX TellerApp example
+// some methods (ex: runLibrary) are based on methods in the EdX TellerApp example
+// some methods are also based on the EdX JsonSerializationDemo example!
 
 package ui;
 
 import model.Book;
 import model.Library;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 // Library application with various features (ex: adding books)
 public class LibraryApp {
+    private static final String JSON_STORE = "./data/library.json";
     private Library lib;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // EFFECTS: runs the library application
-    public LibraryApp() {
+    public LibraryApp() throws FileNotFoundException {
+        start();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runLibrary();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: starts the library and scanner systems
+    private void start() {
+        lib = new Library("Library");
+        input = new Scanner(System.in);
+        input.useDelimiter("\n");
     }
 
     // MODIFIES: this
@@ -24,7 +43,7 @@ public class LibraryApp {
     private void runLibrary() {
         boolean keepGoing = true;
 
-        start();
+        System.out.println("Welcome to your library!");
 
         while (keepGoing) {
             displayMenu();
@@ -40,22 +59,15 @@ public class LibraryApp {
         System.out.println("\nSee you later!");
     }
 
-    // MODIFIES: this
-    // EFFECTS: starts the library and scanner systems
-    private void start() {
-        lib = new Library();
-        input = new Scanner(System.in);
-        input.useDelimiter("\n");
-    }
-
     // EFFECTS: displays main menu options to user
     private void displayMenu() {
-        System.out.println("Welcome to your library!");
         System.out.println("\nSelect from:");
         System.out.println("\ta -> add or delete a book");
         System.out.println("\tv -> view a list of your books");
         System.out.println("\tr -> add a rating or read status for a book");
-        System.out.println("\ts -> search for a book");
+        System.out.println("\tf -> find/search for a book");
+        System.out.println("\ts -> save library to file");
+        System.out.println("\tl -> load library from file");
         System.out.println("\tq -> quit");
     }
 
@@ -68,8 +80,12 @@ public class LibraryApp {
             doView();
         } else if (command.equalsIgnoreCase("r")) {
             ratingOrStatusMenu();
-        } else if (command.equalsIgnoreCase("s")) {
+        } else if (command.equalsIgnoreCase("f")) {
             searchMenu();
+        } else if (command.equalsIgnoreCase("s")) {
+            saveLibrary();
+        } else if (command.equalsIgnoreCase("l")) {
+            loadLibrary();
         } else {
             System.out.println("Invalid response. Returning to main menu...");
         }
@@ -300,6 +316,29 @@ public class LibraryApp {
             System.out.println(lib.libBookInfo(lib.searchUnreadBooks()));
         } else {
             System.out.println("Sorry, you've read everything :( ");
+        }
+    }
+
+    // EFFECTS: saves the library to file
+    private void saveLibrary() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(lib);
+            jsonWriter.close();
+            System.out.println("Saved " + lib.getLibName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to save to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads the library from file
+    private void loadLibrary() {
+        try {
+            lib = jsonReader.read();
+            System.out.println("Loaded " + lib.getLibName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 

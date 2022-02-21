@@ -1,7 +1,12 @@
+// the toJson method is based on methods in the EdX JsonSerializationDemo provided in class
+
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // Represents a book with a title, a genre, an author, a published date, and a "read" status
-public class Book {
+public class Book implements Writable {
     private String title;
     private String genre;
     private String author;
@@ -75,6 +80,20 @@ public class Book {
             rating = "nothing";
         }
         return book.title + " by " + author + " about " + genre + " with a rating of " + rating;
+    }
+
+    @Override
+    // EFFECTS: returns book as a JSONObject
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("title", title);
+        json.put("genre", genre);
+        json.put("author", author);
+        json.put("rating", rating);
+        json.put("date published", datePublished);
+        json.put("read status", readStatus);
+
+        return json;
     }
 
 }
