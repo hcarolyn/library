@@ -13,6 +13,8 @@ import javax.swing.JButton;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -33,6 +35,7 @@ public class LibraryAppNew extends JFrame {
     private JButton loadButton;
     private JButton saveButton;
 
+    private LibraryMainPanel mainPanel;
     private AddBookPanel addBookAB;
     private DeleteBookPanel deleteBookAB;
 
@@ -41,7 +44,6 @@ public class LibraryAppNew extends JFrame {
         super("Library App");
         initializeFields();
         initializeGraphics();
-
     }
 
     public void initializeFields() {
@@ -49,11 +51,14 @@ public class LibraryAppNew extends JFrame {
         books = lib.getArrayLib();
         input = new Scanner(System.in);
         input.useDelimiter("\n");
+
         this.jsonWriter = new JsonWriter(JSON_STORE);
         this.jsonReader = new JsonReader(JSON_STORE);
+        this.mainPanel = new LibraryMainPanel();
         this.addBookAB = new AddBookPanel();
         this.deleteBookAB = new DeleteBookPanel();
 
+        setUpButtons();
     }
 
     public void initializeGraphics() {
@@ -66,9 +71,20 @@ public class LibraryAppNew extends JFrame {
 
         this.add(addBookAB);
         this.add(deleteBookAB);
+        this.add(mainPanel);
     }
 
-    public void addListener() throws BookNotAddedException {
+    public void setUpButtons() {
+        addButton = mainPanel.getAddButton();
+        deleteButton = mainPanel.getDeleteButton();
+        loadButton = mainPanel.getLoadButton();
+        saveButton = mainPanel.getSaveButton();
+
+        addDeleteListener();
+        saveLoadListener();
+    }
+
+    public void addDeleteListener() {
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -90,16 +106,22 @@ public class LibraryAppNew extends JFrame {
                 }
             }
         });
+    }
 
+    public void saveLoadListener() {
         loadButton.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                loadButtonPressed();
             }
         });
 
-
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveButtonPressed();
+            }
+        });
     }
 
     public void addButtonPressed() throws BookNotAddedException {
@@ -127,60 +149,34 @@ public class LibraryAppNew extends JFrame {
     }
 
     public void saveButtonPressed() {
-
+        try {
+            jsonWriter.open();
+            jsonWriter.write(lib);
+            jsonWriter.close();
+            System.out.println("Saved " + lib.getLibName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to save to file: " + JSON_STORE);
+        }
+        // UPDATE MAIN GRAPHICS TO DISPLAY SOME KIND OF MESSAGE HERE
     }
 
     public void loadButtonPressed() {
-
+        try {
+            lib = jsonReader.read();
+            System.out.println("Loaded " + lib.getLibName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+        // UPDATE MORE MAIN GRAPHICS (also can i add sout messages?)
     }
 
-    // add an add book panel, delete book popup, and
+    // add a search panel, add book panel stuff, figure out display message panel
+
     // when you click delete, search button comes up, can delete
 
     // add the book stuff (for each one, i want to add an action listener
     // for (Book b : books)
     // add button and display
-
-
-//    public class LabelChanger extends JFrame implements ActionListener {
-//        private JLabel label;
-//        private JTextField field;
-//
-//        public LabelChanger() {
-//            super("The title");
-//            setDefaultCloseOperation(EXIT_ON_CLOSE);
-//            setPreferredSize(new Dimension(400, 90));
-//            ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13) );
-//            setLayout(new FlowLayout());
-//            JButton btn = new JButton("Change");
-//            btn.setActionCommand("myButton");
-//            btn.addActionListener(this); // Sets "this" object as an action listener for btn
-//            // so that when the btn is clicked,
-//            // this.actionPerformed(ActionEvent e) will be called.
-//            // You could also set a different object, if you wanted
-//            // a different object to respond to the button click
-//            label = new JLabel("flag");
-//            field = new JTextField(5);
-//            add(field);
-//            add(btn);
-//            add(label);
-//            pack();
-//            setLocationRelativeTo(null);
-//            setVisible(true);
-//            setResizable(false);
-//        }
-//
-//        //This is the method that is called when the the JButton btn is clicked
-//        public void actionPerformed(ActionEvent e) {
-//            if (e.getActionCommand().equals("myButton")) {
-//                label.setText(field.getText());
-//            }
-//        }
-//
-//        public static void main(String[] args) {
-//            new LabelChanger();
-//        }
-//    }
 
 
 }

@@ -4,11 +4,34 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class LibraryAppMainScreen extends JPanel {
+public class LibraryMainPanel extends JPanel {
     private JButton addButton;
     private JButton deleteButton;
     private JButton loadButton;
     private JButton saveButton;
+
+    public LibraryMainPanel() {
+        setUpAddButton();
+        setUpDeleteButton();
+        setUpLoadButton();
+        setUpSaveButton();
+    }
+
+    public JButton getAddButton() {
+        return addButton;
+    }
+
+    public JButton getDeleteButton() {
+        return deleteButton;
+    }
+
+    public JButton getLoadButton() {
+        return loadButton;
+    }
+
+    public JButton getSaveButton() {
+        return saveButton;
+    }
 
     private void newButton(JButton button, String label, int x, int y, int sizeX, int sizeY) {
         button.setText(label);
