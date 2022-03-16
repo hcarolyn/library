@@ -1,21 +1,4 @@
 {
-    "books": [
-        {
-            "author": "adfs",
-            "read status": false,
-            "genre": "fds",
-            "rating": 0,
-            "date published": 20,
-            "title": "fa"
-        },
-        {
-            "author": "fjds",
-            "read status": false,
-            "genre": "ewrjio",
-            "rating": 0,
-            "date published": 200,
-            "title": "fjso"
-        }
-    ],
+    "books": [],
     "name": "Library"
 }
