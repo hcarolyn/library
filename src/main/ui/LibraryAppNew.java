@@ -6,13 +6,12 @@ import model.Book;
 import model.Library;
 import persistence.JsonReader;
 import persistence.JsonWriter;
+import ui.panels.*;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
 
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ import java.util.Scanner;
 public class LibraryAppNew extends JFrame {
     private static final String JSON_STORE = "./data/library.json";
     private static final int WIDTH = 1000;
-    private static final int HEIGHT = 700;
+    private static final int HEIGHT = 1500;
 
     private Library lib;
     private ArrayList<Book> books;
@@ -38,6 +37,7 @@ public class LibraryAppNew extends JFrame {
     private LibraryMainPanel mainPanel;
     private AddBookPanel addBookAB;
     private DeleteBookPanel deleteBookAB;
+    private GraphicPanel graphicPanel;
 
 
     public LibraryAppNew() {
@@ -55,8 +55,13 @@ public class LibraryAppNew extends JFrame {
         this.jsonWriter = new JsonWriter(JSON_STORE);
         this.jsonReader = new JsonReader(JSON_STORE);
         this.mainPanel = new LibraryMainPanel();
+        this.mainPanel.setBounds(0, 0, WIDTH, 1500);
+        this.graphicPanel = new GraphicPanel();
+        this.graphicPanel.setBounds(0, 125, WIDTH, 1375);
         this.addBookAB = new AddBookPanel();
+        this.addBookAB.setBounds(0, 125, WIDTH, 1375);
         this.deleteBookAB = new DeleteBookPanel();
+        this.deleteBookAB.setBounds(0, 125, WIDTH, 1375);
 
         setUpButtons();
     }
@@ -72,6 +77,7 @@ public class LibraryAppNew extends JFrame {
         this.add(addBookAB);
         this.add(deleteBookAB);
         this.add(mainPanel);
+        this.add(graphicPanel);
     }
 
     public void setUpButtons() {
@@ -85,67 +91,57 @@ public class LibraryAppNew extends JFrame {
     }
 
     public void addDeleteListener() {
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    addButtonPressed();
-                } catch (BookNotAddedException n) {
-                    /// ADD SOMETHING HERE
-                }
-            }
+//        addButton.addActionListener(e -> {
+//            try {
+//                addButtonPressed();
+//            } catch (BookNotAddedException n) {
+//                /// ADD SOMETHING HERE
+//            }
+//        });
+//
+        addButton.addActionListener(e -> {
+            addButtonPressed();
         });
 
-        deleteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    deleteButtonPressed();
-                } catch (BookNotDeletedException n) {
-                    // ADD SOMETHING HERE
-                }
+        deleteButton.addActionListener(e -> {
+            try {
+                deleteButtonPressed();
+            } catch (BookNotDeletedException n) {
+                // ADD SOMETHING HERE
             }
         });
     }
 
     public void saveLoadListener() {
-        loadButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loadButtonPressed();
-            }
-        });
+        loadButton.addActionListener(e -> loadButtonPressed());
 
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                saveButtonPressed();
-            }
-        });
+        saveButton.addActionListener(e -> saveButtonPressed());
     }
 
-    public void addButtonPressed() throws BookNotAddedException {
+    //throws BookNotAddedException
+    public void addButtonPressed() {
         int size = lib.getLibSize();
         addBookAB.changeVisibility(true);
         Book toAddBook = addBookAB.getBook();
         lib.addBook(toAddBook);
-        if (lib.getLibSize() == size) {
-            throw new BookNotAddedException();
-        }
+//        if (lib.getLibSize() == size) {
+//            throw new BookNotAddedException();
+//        }
         addBookAB.changeVisibility(false);
-        // NEED TO UPDATE MAIN GRAPHICS HERE
+        addBook(toAddBook);
         // if this doesn't change size, throw new exception?
     }
 
     public void deleteButtonPressed() throws BookNotDeletedException {
         int size = lib.getLibSize();
         deleteBookAB.changeVisibility(true);
+        Book toDeleteBook = lib.searchTitle(deleteBookAB.getBookTitle()).get(0);
         lib.removeBook(deleteBookAB.getBookTitle());
-        if (lib.getLibSize() == size) {
-            throw new BookNotDeletedException();
-        }
+//        if (lib.getLibSize() == size) {
+//            throw new BookNotDeletedException();
+//        }
         deleteBookAB.changeVisibility(false);
-        // UPDATE MAIN GRAPHICS TO DELETE BOOK HERE
+        deleteBook(toDeleteBook);
     }
 
     public void saveButtonPressed() {
@@ -167,8 +163,25 @@ public class LibraryAppNew extends JFrame {
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
-        // UPDATE MORE MAIN GRAPHICS (also can i add sout messages?)
+
+        BookPanel bookPanel;
+
+        for (Book b : lib.getArrayLib()) {
+            bookPanel = new BookPanel(b);
+            graphicPanel.add(bookPanel);
+        }
     }
+
+    public void addBook(Book b) {
+        BookPanel book = new BookPanel(b);
+        graphicPanel.addBook(book);
+    }
+
+    public void deleteBook(Book b) {
+        BookPanel book = new BookPanel(b);
+        graphicPanel.removeBook(book);
+    }
+
 
     // add a search panel, add book panel stuff, figure out display message panel
 
@@ -176,7 +189,5 @@ public class LibraryAppNew extends JFrame {
 
     // add the book stuff (for each one, i want to add an action listener
     // for (Book b : books)
-    // add button and display
-
 
 }

@@ -1,4 +1,4 @@
-package ui;
+package ui.panels;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -15,6 +15,7 @@ public class LibraryMainPanel extends JPanel {
         setUpDeleteButton();
         setUpLoadButton();
         setUpSaveButton();
+
     }
 
     public JButton getAddButton() {
@@ -59,8 +60,6 @@ public class LibraryMainPanel extends JPanel {
         saveButton = new JButton();
         newButton(saveButton, "Save Library", 250, 50, 50, 50);
     }
-
-
 
 
 //        selected book - if you click on the button, then things will happen?,

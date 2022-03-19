@@ -1,4 +1,4 @@
-package ui;
+package ui.panels;
 
 import model.Book;
 
@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 public class DeleteBookPanel extends JPanel implements ActionListener {
     private JTextField title;
     private String bookTitle;
-    private model.Book book;
+    private Book book;
 
     public Book getBook() {
         return book;
@@ -30,7 +30,7 @@ public class DeleteBookPanel extends JPanel implements ActionListener {
         JButton btn = new JButton("Delete Book");
         btn.setActionCommand("myButton");
         btn.addActionListener(this);
-        title = new JTextField("Title", 7);
+        title = new JTextField("Title", 10);
         add(title);
         add(btn);
         setVisible(false);

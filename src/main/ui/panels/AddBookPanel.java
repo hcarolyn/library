@@ -1,4 +1,4 @@
-package ui;
+package ui.panels;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,10 +28,10 @@ public class AddBookPanel extends JPanel implements ActionListener {
         JButton btn = new JButton("Add Book");
         btn.setActionCommand("myButton");
         btn.addActionListener(this);
-        title = new JTextField("Title", 7);
-        genre = new JTextField("Genre", 5);
-        author = new JTextField("Author", 7);
-        datePublished = new JTextField("Publishing year", 3);
+        title = new JTextField("Title", 10);
+        genre = new JTextField("Genre", 10);
+        author = new JTextField("Author", 10);
+        datePublished = new JTextField("Publishing year", 7);
         add(title);
         add(genre);
         add(author);
@@ -41,7 +41,6 @@ public class AddBookPanel extends JPanel implements ActionListener {
     }
 
     @Override
-    //This is the method that is called when the JButton btn is clicked
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("myButton")) {
             String title = this.title.getText();
