@@ -128,6 +128,19 @@ public class Library implements Writable {
         return searchResult;
     }
 
+    // REQUIRES: valid index
+    // EFFECTS: returns a list with book index
+    public Book searchIndex(int index) {
+        ArrayList<Book> searchResult = new ArrayList<>();
+
+        for (Book b : library) {
+            if (index == (b.getIndex())) {
+                searchResult.add(b);
+            }
+        }
+        return searchResult.get(0);
+    }
+
     // REQUIRES: non-empty string
     // EFFECTS: returns a list with all books fitting the genre
     public ArrayList<Book> searchGenre(String genre) {

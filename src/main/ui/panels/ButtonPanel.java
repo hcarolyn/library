@@ -1,21 +1,25 @@
 package ui.panels;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class LibraryMainPanel extends JPanel {
+public class ButtonPanel extends JPanel {
     private JButton addButton;
     private JButton deleteButton;
     private JButton loadButton;
     private JButton saveButton;
+    private JButton editButton;
 
-    public LibraryMainPanel() {
+    public ButtonPanel() {
         setUpAddButton();
         setUpDeleteButton();
         setUpLoadButton();
         setUpSaveButton();
+        setUpEditButton();
+        setVisible(true);
+    }
 
+    public JButton getEditButton() {
+        return editButton;
     }
 
     public JButton getAddButton() {
@@ -41,24 +45,29 @@ public class LibraryMainPanel extends JPanel {
         add(button);
     }
 
+    private void setUpEditButton() {
+        editButton = new JButton();
+        newButton(editButton, "Edit Book", 800, 50, 125, 50);
+    }
+
     private void setUpAddButton() {
         addButton = new JButton();
-        newButton(addButton, "Add Book", 25, 50, 50, 50);
+        newButton(addButton, "Add Book", 25, 50, 125, 50);
     }
 
     private void setUpDeleteButton() {
         deleteButton = new JButton();
-        newButton(deleteButton, "Delete Book", 100, 50, 50, 50);
+        newButton(deleteButton, "Delete Book", 200, 50, 125, 50);
     }
 
     private void setUpLoadButton() {
         loadButton = new JButton();
-        newButton(loadButton, "Load Library", 170, 50, 50, 50);
+        newButton(loadButton, "Load Library", 350, 50, 125, 50);
     }
 
     private void setUpSaveButton() {
         saveButton = new JButton();
-        newButton(saveButton, "Save Library", 250, 50, 50, 50);
+        newButton(saveButton, "Save Library", 500, 50, 125, 50);
     }
 
 

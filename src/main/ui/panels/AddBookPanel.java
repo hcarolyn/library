@@ -1,53 +1,49 @@
 package ui.panels;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import model.Book;
+public class AddBookPanel {
+    JPanel addBookPanel;
+    JTextField title = new JTextField();
+    JTextField author = new JTextField();
+    JTextField year = new JTextField();
+    JTextField genre = new JTextField();
+    JTextField rating = new JTextField();
 
-public class AddBookPanel extends JPanel implements ActionListener {
-    private JTextField title;
-    private JTextField datePublished;
-    private JTextField genre;
-    private JTextField author;
-    private Book book;
-
-    public Book getBook() {
-        return book;
-    }
-
-    public void changeVisibility(Boolean bool) {
-        setVisible(bool);
-    }
+    Object[] bookOptions = {
+            "Title: ", title,
+            "Author: ", author,
+            "Year: ", year,
+            "Genre: ", genre,
+            "Rating: ", rating
+    };
 
     public AddBookPanel() {
-        super();
-        setLayout(new FlowLayout());
-        JButton btn = new JButton("Add Book");
-        btn.setActionCommand("myButton");
-        btn.addActionListener(this);
-        title = new JTextField("Title", 10);
-        genre = new JTextField("Genre", 10);
-        author = new JTextField("Author", 10);
-        datePublished = new JTextField("Publishing year", 7);
-        add(title);
-        add(genre);
-        add(author);
-        add(datePublished);
-        add(btn);
-        setVisible(false);
+        addBookPanel = new JPanel();
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("myButton")) {
-            String title = this.title.getText();
-            String genre = this.genre.getText();
-            String author = this.author.getText();
-            int datePublished = Integer.parseInt(this.datePublished.getText());
-            this.book = new Book(title, genre, author, datePublished);
-        }
+    public Object getBookOptions() {
+        return bookOptions;
     }
+
+    public String getTitle() {
+        return title.getText();
+    }
+
+    public String getAuthor() {
+        return author.getText();
+    }
+
+    public String getYear() {
+        return year.getText();
+    }
+
+    public String getGenre() {
+        return genre.getText();
+    }
+
+    public String getRating() {
+        return rating.getText();
+    }
+
 }

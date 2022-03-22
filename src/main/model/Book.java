@@ -13,6 +13,7 @@ public class Book implements Writable {
     private int rating; // from 1 to 5, with 0 representing no rating
     private int datePublished;
     private boolean readStatus;
+    private int index;
 
     // REQUIRES: title, genre, and author are not empty strings
     //           datePublished is a valid year (2022 >= datePublished >= 1 AD)
@@ -24,6 +25,14 @@ public class Book implements Writable {
         this.rating = 0;
         this.datePublished = datePublished;
         this.readStatus = false;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public int getIndex() {
+        return this.index;
     }
 
     // EFFECTS: gets title
