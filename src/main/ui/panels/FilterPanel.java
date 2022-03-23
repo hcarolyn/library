@@ -44,7 +44,7 @@ public class FilterPanel extends JPanel {
     }
 
     public String getSearchInput() {
-        return searchInput.toString();
+        return searchInput.getText();
     }
 
     public JButton getSearchButton() {

@@ -1,21 +1,11 @@
 {
-    "books": [
-        {
-            "author": "fdsml",
-            "read status": false,
-            "genre": "fdsnk",
-            "rating": 0,
-            "date published": 200,
-            "title": "sdhof"
-        },
-        {
-            "author": "fdsnl",
-            "read status": false,
-            "genre": "fdml",
-            "rating": 0,
-            "date published": 200,
-            "title": "fdsjl"
-        }
-    ],
+    "books": [{
+        "author": "fds",
+        "read status": false,
+        "genre": "fsd",
+        "rating": 2,
+        "date published": 200,
+        "title": "fds"
+    }],
     "name": "Library App"
 }

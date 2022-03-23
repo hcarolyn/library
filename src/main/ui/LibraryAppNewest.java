@@ -5,10 +5,7 @@ import model.Book;
 import model.Library;
 import persistence.JsonReader;
 import persistence.JsonWriter;
-import ui.panels.AddBookPanel;
-import ui.panels.BooksPanel;
-import ui.panels.ButtonPanel;
-import ui.panels.FilterPanel;
+import ui.panels.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,13 +31,14 @@ public class LibraryAppNewest extends JFrame {
     private JButton loadButton;
     private JButton saveButton;
     private JButton searchButton;
-    private JButton editButton;
+    private JButton changeRatingButton;
     private JButton resetButton;
 
     private BooksPanel booksPanel;
     private ButtonPanel buttonPanel;
     private AddBookPanel addBookPanel;
     private FilterPanel filterPanel;
+    private ChartPanel chartPanel;
 
     public LibraryAppNewest() {
         super("Library App");
@@ -61,10 +59,13 @@ public class LibraryAppNewest extends JFrame {
         booksPanel = new BooksPanel();
         buttonPanel = new ButtonPanel();
         filterPanel = new FilterPanel();
+        chartPanel = new ChartPanel();
+
         this.buttonPanel.setBounds(0, 0, 750, 100);
         this.booksPanel.setBounds(0, 150, WIDTH, HEIGHT);
 
         setUpButtons();
+        setUpChart();
     }
 
     public void initializeGraphics() {
@@ -76,7 +77,29 @@ public class LibraryAppNewest extends JFrame {
 
         this.add(buttonPanel, BorderLayout.PAGE_START);
         this.add(booksPanel, BorderLayout.CENTER);
-        this.add(filterPanel, BorderLayout.LINE_START);
+        this.add(filterPanel, BorderLayout.WEST);
+        this.add(chartPanel, BorderLayout.EAST);
+    }
+
+    public void setUpChart() {
+        for (int i = 0; i < 6; i++) {
+            chartPanel.addBar(Integer.toString(i), numberRatings(i));
+        }
+    }
+
+    public int numberRatings(int rating) {
+        int returnRating = 0;
+
+        for (Book b : lib.getArrayLib()) {
+            if (b.getRating() == rating) {
+                returnRating++;
+            }
+        }
+        return returnRating;
+    }
+
+    public void clearChart() {
+        chartPanel.deleteBars();
     }
 
     public void setUpButtons() {
@@ -84,7 +107,7 @@ public class LibraryAppNewest extends JFrame {
         deleteButton = buttonPanel.getDeleteButton();
         loadButton = buttonPanel.getLoadButton();
         saveButton = buttonPanel.getSaveButton();
-        editButton = buttonPanel.getEditButton();
+        changeRatingButton = buttonPanel.getChangeRatingButton();
         searchButton = filterPanel.getSearchButton();
         resetButton = filterPanel.getResetButton();
 
@@ -96,20 +119,26 @@ public class LibraryAppNewest extends JFrame {
         deleteButton.addActionListener(e -> deleteButtonPressed());
         loadButton.addActionListener(e -> loadButtonPressed());
         saveButton.addActionListener(e -> saveButtonPressed());
-        editButton.addActionListener(e -> editButtonPressed());
+        changeRatingButton.addActionListener(e -> changeRatingButtonPressed());
         searchButton.addActionListener(e -> searchButtonPressed());
         resetButton.addActionListener(e -> resetButtonPressed());
     }
 
-    public void editButtonPressed() {
+    public void changeRatingButtonPressed() {
+        int index = booksPanel.getSelected();
+        if (index < 0) {
+            return;
+        }
+        editPopup(index);
+    }
 
-//        public void deleteButtonPressed() {
-//            int index = booksPanel.deleteBook();
-//
-//            if (index >= 0) {
-//                lib.removeBook(lib.searchIndex(index).getTitle());
-//            }
-//        }
+    public void editPopup(int index) {
+        int rating = booksPanel.changeRating(index);
+        if (rating > 0) {
+            lib.searchIndex(index).changeRating(rating);
+            clearChart();
+            setUpChart();
+        }
     }
 
     public void addButtonPressed() {
@@ -133,8 +162,12 @@ public class LibraryAppNewest extends JFrame {
                         "Invalid year",
                         "Error",
                         JOptionPane.WARNING_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this,
+                        "Invalid inputs",
+                        "Error",
+                        JOptionPane.WARNING_MESSAGE);
             }
-
         }
     }
 
@@ -165,6 +198,8 @@ public class LibraryAppNewest extends JFrame {
         try {
             lib = jsonReader.read();
             booksPanel.loadBooks(lib.getArrayLib());
+            clearChart();
+            setUpChart();
             JOptionPane.showMessageDialog(this,
                     "Loaded " + lib.getLibName() + " from " + JSON_STORE);
         } catch (IOException e) {
@@ -189,6 +224,9 @@ public class LibraryAppNewest extends JFrame {
     public void resetButtonPressed() {
         booksPanel.noFilterBooks();
     }
+
+
+
 
 }
 

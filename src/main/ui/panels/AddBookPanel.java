@@ -15,7 +15,6 @@ public class AddBookPanel {
             "Author: ", author,
             "Year: ", year,
             "Genre: ", genre,
-            "Rating: ", rating
     };
 
     public AddBookPanel() {

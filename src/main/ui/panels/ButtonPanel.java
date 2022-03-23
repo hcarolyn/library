@@ -7,19 +7,19 @@ public class ButtonPanel extends JPanel {
     private JButton deleteButton;
     private JButton loadButton;
     private JButton saveButton;
-    private JButton editButton;
+    private JButton changeRatingButton;
 
     public ButtonPanel() {
         setUpAddButton();
         setUpDeleteButton();
         setUpLoadButton();
         setUpSaveButton();
-        setUpEditButton();
+        setUpRatingButton();
         setVisible(true);
     }
 
-    public JButton getEditButton() {
-        return editButton;
+    public JButton getChangeRatingButton() {
+        return changeRatingButton;
     }
 
     public JButton getAddButton() {
@@ -45,9 +45,9 @@ public class ButtonPanel extends JPanel {
         add(button);
     }
 
-    private void setUpEditButton() {
-        editButton = new JButton();
-        newButton(editButton, "Edit Book", 800, 50, 125, 50);
+    private void setUpRatingButton() {
+        changeRatingButton = new JButton();
+        newButton(changeRatingButton, "Change Rating", 800, 50, 125, 50);
     }
 
     private void setUpAddButton() {
