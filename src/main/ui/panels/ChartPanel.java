@@ -9,11 +9,13 @@ import java.util.stream.IntStream;
 // some methods are based on this website:
 // http://helpdesk.objects.com.au/java/how-to-display-bar-chart-using-swing
 
+// A class that represents a bar chart with rating statistics
 public class ChartPanel extends JPanel {
     JPanel chartPanel;
     private static final Color BAR_COLOUR = Color.blue;
     private Map<Color, Integer> bars = new LinkedHashMap<Color, Integer>();
 
+    // EFFECTS: creates a panel with bar chart and explanatory labels
     public ChartPanel() {
         chartPanel = new JPanel();
         JLabel noLabel = new JLabel("Blue = No Rating");
@@ -38,11 +40,16 @@ public class ChartPanel extends JPanel {
         this.setVisible(true);
     }
 
+    // REQUIRES: valid color, value >= 0
+    // MODIFIES: this
+    // EFFECTS: creates and adds a new bar on chart
     public void addBar(Color color, int value) {
         bars.put(color, value);
         repaint();
     }
 
+    // MODIFIES: this
+    // EFFECTS: changes bar dimensions and color, places bar
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -56,17 +63,20 @@ public class ChartPanel extends JPanel {
         for (Color color : bars.keySet()) {
             int value = bars.get(color);
             int height = (int) ((getHeight() - 5) * ((double) value / max));
-            g.setColor(BAR_COLOUR);
+            g.setColor(color);
             g.fillRect(x, getHeight() - height, width, height);
             x += (width + 10);
         }
     }
 
+    // EFFECTS: returns dimension of bars
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(bars.size() * 14 + 2, 50);
     }
 
+    // MODIFIES: this
+    // EFFECTS: deletes bar on chart
     public void deleteBars() {
         bars.clear();
     }

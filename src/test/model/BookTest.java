@@ -29,6 +29,16 @@ class BookTest {
     }
 
     @Test
+    public void testIndex() {
+        book.setIndex(0);
+        assertEquals(0, book.getIndex());
+        assertFalse(book.getIndex() == 1);
+
+        book.setIndex(3);
+        assertEquals(3, book.getIndex());
+    }
+
+    @Test
     public void testChangeRating() {
         this.book.changeRating(1);
         assertEquals(1, this.book.getRating());

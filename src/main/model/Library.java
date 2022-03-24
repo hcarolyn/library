@@ -5,6 +5,7 @@
 
 package model;
 
+import exceptions.BookNotFoundException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
@@ -130,13 +131,17 @@ public class Library implements Writable {
 
     // REQUIRES: valid index
     // EFFECTS: returns a list with book index
-    public Book searchIndex(int index) {
+    public Book searchIndex(int index) throws BookNotFoundException {
         ArrayList<Book> searchResult = new ArrayList<>();
 
         for (Book b : library) {
             if (index == (b.getIndex())) {
                 searchResult.add(b);
             }
+        }
+
+        if (searchResult.isEmpty()) {
+            throw new BookNotFoundException();
         }
         return searchResult.get(0);
     }

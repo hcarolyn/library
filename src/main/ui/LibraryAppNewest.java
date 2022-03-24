@@ -1,6 +1,7 @@
 package ui;
 
 import exceptions.BookNotAddedException;
+import exceptions.BookNotFoundException;
 import model.Book;
 import model.Library;
 import persistence.JsonReader;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+// A class with the newest library app
 public class LibraryAppNewest extends JFrame {
     private static final String JSON_STORE = "./data/library.json";
     private static final int WIDTH = 1000;
@@ -40,6 +42,7 @@ public class LibraryAppNewest extends JFrame {
     private FilterPanel filterPanel;
     private ChartPanel chartPanel;
 
+    // EFFECTS: sets up the library app
     public LibraryAppNewest() {
         super("Library App");
 
@@ -47,6 +50,8 @@ public class LibraryAppNewest extends JFrame {
         initializeGraphics();
     }
 
+    // MODIFIES: this
+    // EFFECT: initializes fields
     public void initializeFields() {
         lib = new Library("Library App");
         books = lib.getArrayLib();
@@ -68,6 +73,8 @@ public class LibraryAppNewest extends JFrame {
         setUpChart();
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets up graphics
     public void initializeGraphics() {
         setLayout(new BorderLayout());
 
@@ -81,6 +88,8 @@ public class LibraryAppNewest extends JFrame {
         this.add(chartPanel, BorderLayout.EAST);
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets up chart with rating distribution
     public void setUpChart() {
         chartPanel.addBar(Color.blue, numberRatings(0));
         chartPanel.addBar(Color.gray, numberRatings(1));
@@ -90,6 +99,7 @@ public class LibraryAppNewest extends JFrame {
         chartPanel.addBar(Color.pink, numberRatings(5));
     }
 
+    // EFFECTS: returns the number of books with a rating
     public int numberRatings(int rating) {
         int returnRating = 0;
 
@@ -101,10 +111,14 @@ public class LibraryAppNewest extends JFrame {
         return returnRating;
     }
 
+    // MODIFIES: this
+    // EFFECTS: clear chart
     public void clearChart() {
         chartPanel.deleteBars();
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets up all buttons
     public void setUpButtons() {
         addButton = buttonPanel.getAddButton();
         deleteButton = buttonPanel.getDeleteButton();
@@ -117,6 +131,8 @@ public class LibraryAppNewest extends JFrame {
         addListener();
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds listeners to all buttons
     public void addListener() {
         addButton.addActionListener(e -> addButtonPressed());
         deleteButton.addActionListener(e -> deleteButtonPressed());
@@ -127,6 +143,7 @@ public class LibraryAppNewest extends JFrame {
         resetButton.addActionListener(e -> resetButtonPressed());
     }
 
+    // EFFECTS: sets up the rating change process
     public void changeRatingButtonPressed() {
         int index = booksPanel.getSelected();
         if (index < 0) {
@@ -135,15 +152,26 @@ public class LibraryAppNewest extends JFrame {
         editPopup(index);
     }
 
+    // MODIFIES: this
+    // EFFECTS: changes the rating of a provided book to a provided number
     public void editPopup(int index) {
         int rating = booksPanel.changeRating(index);
         if (rating > 0) {
-            lib.searchIndex(index).changeRating(rating);
-            clearChart();
-            setUpChart();
+            try {
+                lib.searchIndex(index).changeRating(rating);
+                clearChart();
+                setUpChart();
+            } catch (BookNotFoundException e) {
+                JOptionPane.showMessageDialog(this,
+                        "Invalid index, try again",
+                        "Error",
+                        JOptionPane.WARNING_MESSAGE);
+            }
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds a new book to the library / book panel
     public void addButtonPressed() {
         addBookPanel = new AddBookPanel();
 
@@ -174,14 +202,25 @@ public class LibraryAppNewest extends JFrame {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes book from book panel
     public void deleteButtonPressed() {
         int index = booksPanel.deleteBook();
 
         if (index >= 0) {
-            lib.removeBook(lib.searchIndex(index).getTitle());
+            try {
+                lib.removeBook(lib.searchIndex(index).getTitle());
+            } catch (BookNotFoundException e) {
+                JOptionPane.showMessageDialog(this,
+                        "Invalid index, try again",
+                        "Error",
+                        JOptionPane.WARNING_MESSAGE);
+            }
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: saves library
     public void saveButtonPressed() {
         try {
             jsonWriter.open();
@@ -197,6 +236,8 @@ public class LibraryAppNewest extends JFrame {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: reloads library
     public void loadButtonPressed() {
         try {
             lib = jsonReader.read();
@@ -213,6 +254,8 @@ public class LibraryAppNewest extends JFrame {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: filters book based on user inputs
     public void searchButtonPressed() {
         try {
             booksPanel.filterBooks(filterPanel.getSearchInput(), filterPanel.getSearchType());
@@ -224,12 +267,11 @@ public class LibraryAppNewest extends JFrame {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: resets the filter
     public void resetButtonPressed() {
         booksPanel.noFilterBooks();
     }
-
-
-
 
 }
 

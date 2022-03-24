@@ -27,10 +27,13 @@ public class Book implements Writable {
         this.readStatus = false;
     }
 
+    // REQUIRES: index >= 0
+    // EFFECTS: sets index of book to provided amount
     public void setIndex(int index) {
         this.index = index;
     }
 
+    // EFFECTS: gets index
     public int getIndex() {
         return this.index;
     }

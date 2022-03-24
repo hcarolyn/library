@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.BookNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -235,12 +236,40 @@ public class LibraryTest {
     }
 
     @Test
+    public void testSearchIndexNoResult() {
+        bkA.setIndex(1);
+        testLibrary.addBook(bkA);
+
+        try {
+            Book searchResults = testLibrary.searchIndex(0);
+        } catch (BookNotFoundException e) {
+            // pass
+        }
+
+    }
+
+    @Test
     public void testSearchTitlesNoResult() {
         testLibrary.addBook(bkC);
         testLibrary.addBook(bkD);
 
         ArrayList<Book> searchResults = testLibrary.searchTitle(bkATitle);
         assertEquals(0, searchResults.size());
+    }
+
+    @Test
+    public void testSearchIndexSingleResult() {
+        bkA.setIndex(1);
+        testLibrary.addBook(bkA);
+        bkB.setIndex(2);
+        testLibrary.addBook(bkB);
+
+        try {
+            Book searchResults = testLibrary.searchIndex(2);
+            assertEquals(bkB, searchResults);
+        } catch (BookNotFoundException e) {
+            fail("Exception should not have been thrown");
+        }
     }
 
     @Test

@@ -4,14 +4,11 @@ import exceptions.BookNotAddedException;
 import model.Book;
 
 import javax.swing.*;
-import javax.swing.event.TableColumnModelListener;
 import javax.swing.table.*;
 import java.awt.*;
-import java.beans.Visibility;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
 
+// A class representing a panel of books (in the form of a table)
 public class BooksPanel extends JPanel {
     private DefaultTableModel tableModel;
     private JTable panel;
@@ -22,6 +19,7 @@ public class BooksPanel extends JPanel {
     };
 
 
+    // EFFECTS: creates a new, non-editable table of books and adds it to a panel
     public BooksPanel() {
         this.tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
@@ -39,7 +37,9 @@ public class BooksPanel extends JPanel {
         panel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
-    private int setUp() {
+    // MODIFIES: this
+    // EFFECTS: adds an option box with rating options and returns user selection
+    private int setUpRating() {
         Object[] options = {"Cancel", "One", "Two", "Three", "Four", "Five"};
         optionList = new JComboBox(options);
         int result = JOptionPane.showConfirmDialog(null, optionList,
@@ -47,8 +47,9 @@ public class BooksPanel extends JPanel {
         return result;
     }
 
+    // EFFECTS: returns user rating for a book
     public int changeRating(int selected) {
-        int result = setUp();
+        int result = setUpRating();
         if (result == JOptionPane.OK_OPTION) {
             switch (optionList.getSelectedItem().toString()) {
                 case "Cancel":
@@ -73,10 +74,9 @@ public class BooksPanel extends JPanel {
         return -1;
     }
 
-    public JTable getPanel() {
-        return panel;
-    }
-
+    // REQUIRES: book entry (ex: valid string for name, author, genre)
+    // MODIFIES: this
+    // EFFECTS: if valid book, adds book to table
     public void addBook(String name, String author, String year, String genre) throws BookNotAddedException {
         if (0 < Integer.parseInt(year) && Integer.parseInt(year) < 2022) {
             Object[] tempObject = {
@@ -89,19 +89,22 @@ public class BooksPanel extends JPanel {
         }
     }
 
+    // EFFECTS: returns number of books in the table
     public int panelSize() {
         return tableModel.getRowCount();
     }
 
+    // MODIFIES: this
+    // EFFECTS: if valid entry, deletes selected row/book
     public int deleteBook() {
         int selected = panel.getSelectedRow();
         if (selected >= 0) {
             tableModel.removeRow(selected);
         }
-
         return selected;
     }
 
+    // EFFECTS: returns row that user selected, returns -1 if invalid row
     public int getSelected() {
         int selected = panel.getSelectedRow();
         if (selected < 0) {
@@ -110,7 +113,9 @@ public class BooksPanel extends JPanel {
         return selected;
     }
 
-
+    // REQUIRES: valid array list of books
+    // MODIFIES: this
+    // EFFECTS: adds a row in table for every book in provided array
     public void loadBooks(ArrayList<Book> books) {
         int i = 0;
         for (Book b : books) {
@@ -133,6 +138,9 @@ public class BooksPanel extends JPanel {
         }
     }
 
+    // REQUIRES: valid search input and search type
+    // MODIFIES: this
+    // EFFECTS: filters the books in the table based on inputs and hides non-valid books
     public void filterBooks(String searchInput, String searchType) {
         TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(this.tableModel);
         panel.setRowSorter(sorter);
@@ -147,6 +155,8 @@ public class BooksPanel extends JPanel {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: takes away the filter in the table, displays all books in library
     public void noFilterBooks() {
         this.panel.setRowSorter(null);
     }
