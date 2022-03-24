@@ -1,6 +1,6 @@
 package ui;
 
-import exceptions.BookNotAddedException;
+import ui.exceptions.BookNotAddedException;
 import exceptions.BookNotFoundException;
 import model.Book;
 import model.Library;

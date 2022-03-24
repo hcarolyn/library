@@ -4,7 +4,6 @@ import javax.swing.*;
 
 // A class that represents information for an adding book panel
 public class AddBookPanel {
-//    JPanel addBookPanel;
     JTextField title = new JTextField();
     JTextField author = new JTextField();
     JTextField year = new JTextField();
@@ -17,10 +16,6 @@ public class AddBookPanel {
             "Year: ", year,
             "Genre: ", genre,
     };
-
-//    public AddBookPanel() {
-//        addBookPanel = new JPanel();
-//    }
 
     // EFFECTS: returns book inputs for user
     public Object getBookOptions() {

@@ -1,6 +1,6 @@
 package ui.panels;
 
-import exceptions.BookNotAddedException;
+import ui.exceptions.BookNotAddedException;
 import model.Book;
 
 import javax.swing.*;
