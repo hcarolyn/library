@@ -1,11 +1,29 @@
 {
-    "books": [{
-        "author": "fds",
-        "read status": false,
-        "genre": "fsd",
-        "rating": 2,
-        "date published": 200,
-        "title": "fds"
-    }],
+    "books": [
+        {
+            "author": "fdsm",
+            "read status": false,
+            "genre": "fds",
+            "rating": 3,
+            "date published": 2002,
+            "title": "fdsjo"
+        },
+        {
+            "author": "fds",
+            "read status": false,
+            "genre": "fds",
+            "rating": 2,
+            "date published": 2002,
+            "title": "fds"
+        },
+        {
+            "author": "fds",
+            "read status": false,
+            "genre": "fds",
+            "rating": 3,
+            "date published": 2002,
+            "title": "fds"
+        }
+    ],
     "name": "Library App"
 }

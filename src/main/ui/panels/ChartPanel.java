@@ -12,15 +12,34 @@ import java.util.stream.IntStream;
 public class ChartPanel extends JPanel {
     JPanel chartPanel;
     private static final Color BAR_COLOUR = Color.blue;
-    private int[] values;
-    private Map<String, Integer> bars = new LinkedHashMap<String, Integer>();
+    private Map<Color, Integer> bars = new LinkedHashMap<Color, Integer>();
 
     public ChartPanel() {
         chartPanel = new JPanel();
+        JLabel noLabel = new JLabel("Blue = No Rating");
+        noLabel.setBackground(Color.blue);
+        JLabel oneLabel = new JLabel("Gray = 1");
+        oneLabel.setBackground(Color.lightGray);
+        JLabel twoLabel = new JLabel("Cyan = 2");
+        twoLabel.setBackground(Color.cyan);
+        JLabel threeLabel = new JLabel("Orange = 3");
+        threeLabel.setBackground(Color.orange);
+        JLabel fourLabel = new JLabel("Red = 4");
+        fourLabel.setBackground(Color.red);
+        JLabel fiveLabel = new JLabel("Pink = 5");
+        fiveLabel.setBackground(Color.pink);
+
+        this.add(noLabel);
+        this.add(oneLabel);
+        this.add(twoLabel);
+        this.add(threeLabel);
+        this.add(fourLabel);
+        this.add(fiveLabel);
+        this.setVisible(true);
     }
 
-    public void addBar(String rating, int value) {
-        bars.put(rating, value);
+    public void addBar(Color color, int value) {
+        bars.put(color, value);
         repaint();
     }
 
@@ -34,12 +53,12 @@ public class ChartPanel extends JPanel {
         int x = 1;
         int width = (getWidth() / bars.size()) - 2;
 
-        for (String rating : bars.keySet()) {
-            int value = bars.get(rating);
+        for (Color color : bars.keySet()) {
+            int value = bars.get(color);
             int height = (int) ((getHeight() - 5) * ((double) value / max));
             g.setColor(BAR_COLOUR);
             g.fillRect(x, getHeight() - height, width, height);
-            x += (width + 3);
+            x += (width + 10);
         }
     }
 
@@ -51,26 +70,5 @@ public class ChartPanel extends JPanel {
     public void deleteBars() {
         bars.clear();
     }
-
-
-
-//    private static final int SCALE = 250;
-//    private static final int WIDTH = 40;
-//
-//    private int total;
-//    private int[] value;
-//
-//    private String[] labels = {
-//            "No rating", "One",
-//            "Two", "Three",
-//            "Four", "Five"
-//    };
-//    private String title = "Rating Distribution";
-//
-//    public ChartPanel(int[] iv) {
-//        value = iv;
-//        total = IntStream.of(iv).sum();
-//    }
-
 
 }

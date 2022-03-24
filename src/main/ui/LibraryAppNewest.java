@@ -82,9 +82,12 @@ public class LibraryAppNewest extends JFrame {
     }
 
     public void setUpChart() {
-        for (int i = 0; i < 6; i++) {
-            chartPanel.addBar(Integer.toString(i), numberRatings(i));
-        }
+        chartPanel.addBar(Color.blue, numberRatings(0));
+        chartPanel.addBar(Color.gray, numberRatings(1));
+        chartPanel.addBar(Color.cyan, numberRatings(2));
+        chartPanel.addBar(Color.orange, numberRatings(3));
+        chartPanel.addBar(Color.red, numberRatings(4));
+        chartPanel.addBar(Color.pink, numberRatings(5));
     }
 
     public int numberRatings(int rating) {
