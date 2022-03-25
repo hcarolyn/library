@@ -7,31 +7,24 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 // some methods are based on this website:
-// http://helpdesk.objects.com.au/java/how-to-display-bar-chart-using-swing
+// https://stackoverflow.com/questions/29873878/creating-a-simple-bar-chart-in-java-reads-data-and-outputs-bar-graph
+
 
 // A class that represents a bar chart with rating statistics
 public class ChartPanel extends JPanel {
     JPanel chartPanel;
-    private static final Color BAR_COLOUR = Color.blue;
     private Map<Color, Integer> bars = new LinkedHashMap<Color, Integer>();
 
     // EFFECTS: creates a panel with bar chart and explanatory labels
     public ChartPanel() {
         chartPanel = new JPanel();
-        JLabel noLabel = new JLabel("Blue = No Rating");
-        noLabel.setBackground(Color.blue);
         JLabel oneLabel = new JLabel("Gray = 1");
-        oneLabel.setBackground(Color.lightGray);
-        JLabel twoLabel = new JLabel("Cyan = 2");
-        twoLabel.setBackground(Color.cyan);
+        JLabel twoLabel = new JLabel("Blue = 2");
         JLabel threeLabel = new JLabel("Orange = 3");
-        threeLabel.setBackground(Color.orange);
         JLabel fourLabel = new JLabel("Red = 4");
-        fourLabel.setBackground(Color.red);
         JLabel fiveLabel = new JLabel("Pink = 5");
-        fiveLabel.setBackground(Color.pink);
 
-        this.add(noLabel);
+        this.add(new JLabel("Rating distributions"));
         this.add(oneLabel);
         this.add(twoLabel);
         this.add(threeLabel);
@@ -55,9 +48,12 @@ public class ChartPanel extends JPanel {
         super.paintComponent(g);
         int max = 0;
         for (int i : bars.values()) {
-            max = Math.max(max, i);
+            if (max <= i) {
+                max = i;
+            }
         }
         int x = 1;
+
         int width = (getWidth() / bars.size()) - 2;
 
         for (Color color : bars.keySet()) {
@@ -69,11 +65,11 @@ public class ChartPanel extends JPanel {
         }
     }
 
-    // EFFECTS: returns dimension of bars
-    @Override
-    public Dimension getPreferredSize() {
-        return new Dimension(bars.size() * 14 + 2, 50);
-    }
+//    // EFFECTS: returns dimension of bars
+//    @Override
+//    public Dimension getPreferredSize() {
+//        return new Dimension(bars.size() * 20 + 5, 50);
+//    }
 
     // MODIFIES: this
     // EFFECTS: deletes bar on chart

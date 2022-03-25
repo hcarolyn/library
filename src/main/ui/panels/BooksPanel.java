@@ -8,6 +8,10 @@ import javax.swing.table.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+// sources for filter/search:
+// https://docs.oracle.com/javase/tutorial/uiswing/components/table.html#sorting
+// https://stackoverflow.com/questions/43425141/rowfilter-regexfilter-with-formatted-date
+
 // A class representing a panel of books (in the form of a table)
 public class BooksPanel extends JPanel {
     private DefaultTableModel tableModel;
@@ -42,9 +46,8 @@ public class BooksPanel extends JPanel {
     private int setUpRating() {
         Object[] options = {"Cancel", "One", "Two", "Three", "Four", "Five"};
         optionList = new JComboBox(options);
-        int result = JOptionPane.showConfirmDialog(null, optionList,
+        return JOptionPane.showConfirmDialog(null, optionList,
                 "Change Rating", JOptionPane.OK_CANCEL_OPTION);
-        return result;
     }
 
     // EFFECTS: returns user rating for a book

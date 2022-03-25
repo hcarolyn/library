@@ -91,9 +91,8 @@ public class LibraryAppNewest extends JFrame {
     // MODIFIES: this
     // EFFECTS: sets up chart with rating distribution
     public void setUpChart() {
-        chartPanel.addBar(Color.blue, numberRatings(0));
         chartPanel.addBar(Color.gray, numberRatings(1));
-        chartPanel.addBar(Color.cyan, numberRatings(2));
+        chartPanel.addBar(Color.blue, numberRatings(2));
         chartPanel.addBar(Color.orange, numberRatings(3));
         chartPanel.addBar(Color.red, numberRatings(4));
         chartPanel.addBar(Color.pink, numberRatings(5));
