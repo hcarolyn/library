@@ -81,7 +81,7 @@ public class BooksPanel extends JPanel {
     // MODIFIES: this
     // EFFECTS: if valid book, adds book to table
     public void addBook(String name, String author, String year, String genre) throws BookNotAddedException {
-        if (0 < Integer.parseInt(year) && Integer.parseInt(year) < 2022) {
+        if (0 < Integer.parseInt(year) && Integer.parseInt(year) <= 2022) {
             Object[] tempObject = {
                     name, author, year, genre, "No rating"
             };

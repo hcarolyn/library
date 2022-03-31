@@ -29,3 +29,15 @@ BestBooks is an application that allows users to
 - As a user, I want to be able to filter through the books in my library by genre, rating, title, or read status
 - As a user, I want to be able to be able to save my library to file
 - As a user, I want to be able to be able to load my library from file
+
+
+**Phase 4: Task 2**
+Wed Mar 30 18:37:03 PDT 2022
+Added Good Book Title 1 by CH about Good Genre with a rating of nothing to library.
+Wed Mar 30 18:37:25 PDT 2022
+Added Other Generic Book by KY about Generic Book with a rating of nothing to library.
+Wed Mar 30 18:37:27 PDT 2022
+Removed Other Generic Book by KY about Generic Book with a rating of nothing from library.
+
+
+

@@ -10,6 +10,9 @@ import ui.panels.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,6 +53,12 @@ public class LibraryAppNewest extends JFrame {
         initializeGraphics();
     }
 
+    // EFFECTS: returns library
+    public Library getLibrary() {
+        return lib;
+    }
+
+
     // MODIFIES: this
     // EFFECT: initializes fields
     public void initializeFields() {
@@ -77,8 +86,8 @@ public class LibraryAppNewest extends JFrame {
     // EFFECTS: sets up graphics
     public void initializeGraphics() {
         setLayout(new BorderLayout());
+        addCloseLog();
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
 
@@ -86,6 +95,44 @@ public class LibraryAppNewest extends JFrame {
         this.add(booksPanel, BorderLayout.CENTER);
         this.add(filterPanel, BorderLayout.WEST);
         this.add(chartPanel, BorderLayout.EAST);
+    }
+
+    // EFFECTS: prints out log when window closes
+    public void addCloseLog() {
+        addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {}
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                lib.printLog();
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+
+            }
+        });
     }
 
     // MODIFIES: this

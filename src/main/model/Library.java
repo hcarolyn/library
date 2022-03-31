@@ -11,7 +11,6 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 // Represents a library (a collection of books)
@@ -40,11 +39,19 @@ public class Library implements Writable {
         return library;
     }
 
+    // EFFECTS: returns event log
+    public void printLog() {
+        for (Event e : EventLog.getInstance()) {
+            System.out.println(e.toString());
+        }
+    }
+
     // REQUIRES: valid book
     // MODIFIES: this
     // EFFECTS: adds a book to the library
     public void addBook(Book book) {
         this.library.add(book);
+        EventLog.getInstance().logEvent(new Event("Added " + book.bookInfo(book) + " to library."));
     }
 
     // REQUIRES: non-empty string
@@ -54,6 +61,7 @@ public class Library implements Writable {
         for (Book b : library) {
             if (title.equalsIgnoreCase(b.getTitle())) {
                 library.remove(b);
+                EventLog.getInstance().logEvent(new Event("Removed " + b.bookInfo(b) + " from library."));
                 return true;
             }
         }
