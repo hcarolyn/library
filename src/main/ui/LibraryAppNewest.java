@@ -99,7 +99,6 @@ public class LibraryAppNewest extends JFrame {
         addWindowListener(new WindowListener() {
             @Override
             public void windowOpened(WindowEvent e) {
-
             }
 
             @Override
@@ -124,12 +123,10 @@ public class LibraryAppNewest extends JFrame {
 
             @Override
             public void windowActivated(WindowEvent e) {
-
             }
 
             @Override
             public void windowDeactivated(WindowEvent e) {
-
             }
         });
     }
