@@ -108,12 +108,10 @@ public class LibraryAppNewest extends JFrame {
 
             @Override
             public void windowClosed(WindowEvent e) {
-
             }
 
             @Override
             public void windowIconified(WindowEvent e) {
-
             }
 
             @Override
