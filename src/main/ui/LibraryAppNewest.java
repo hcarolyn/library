@@ -10,12 +10,10 @@ import ui.panels.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 // A class with the newest library app
@@ -25,7 +23,6 @@ public class LibraryAppNewest extends JFrame {
     private static final int HEIGHT = 1500;
 
     private Library lib;
-    private ArrayList<Book> books;
 
     private Scanner input;
     private JsonWriter jsonWriter;
@@ -63,7 +60,6 @@ public class LibraryAppNewest extends JFrame {
     // EFFECT: initializes fields
     public void initializeFields() {
         lib = new Library("Library App");
-        books = lib.getArrayLib();
         input = new Scanner(System.in);
         input.useDelimiter("\n");
 

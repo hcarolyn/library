@@ -39,5 +39,11 @@ Added Other Generic Book by KY about Generic Book with a rating of nothing to li
 Wed Mar 30 18:37:27 PDT 2022
 Removed Other Generic Book by KY about Generic Book with a rating of nothing from library.
 
-
+**Phase 4: Task 3**
+If I had more time, these are a few things I would've liked to change:
+- Changed the placement of methods so they are in more appropriate classes 
+  - For example, all of the filtering methods should theoretically be in the filter panel class
+- Refactored repetitive code (for example: the AddBookPanel class has very similar methods to the BooksPanel class)
+- Created individual panels for each book and added a new BookPanel class
+- Make my program more robust by adding more exceptions  
 
