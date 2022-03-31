@@ -94,10 +94,13 @@ public class LibraryAppNewest extends JFrame {
     }
 
     // EFFECTS: prints out log when window closes
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public void addCloseLog() {
         addWindowListener(new WindowListener() {
             @Override
-            public void windowOpened(WindowEvent e) {}
+            public void windowOpened(WindowEvent e) {
+
+            }
 
             @Override
             public void windowClosing(WindowEvent e) {
